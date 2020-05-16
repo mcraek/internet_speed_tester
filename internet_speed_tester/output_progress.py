@@ -2,16 +2,20 @@ def output_progress(args, message, log_name):
 
     # === Import required functions / libraries ===
 
-    # Built-in
+    # --- Built-in ---
 
-    import      os      # Writes output to text file if --log specified
+    # Writes output to text file if --log specified
 
-    # Functions built for project
+    import os
 
-    from        print_msg       import      print_msg       # Print messages to console with auto time.sleep
+    # --- Functions built for project ---
 
+    # Print messages to console with auto time.sleep
 
-    # === Define function for writing log messages to text file in same directory as program
+    from print_msg import print_msg
+
+    # === Define function for writing log messages to text
+    # file in same directory as program ===
 
     def write_log(log_msg):
 
@@ -19,19 +23,19 @@ def output_progress(args, message, log_name):
 
         log_check = os.path.exists('./' + log_name)
 
-        if log_check == False:
+        if not log_check:
 
-            log_file = open(log_name,'w')
+            log_file = open(log_name, 'w')
             log_file.close()
 
         # Append message to log file
 
-        log_file = open(log_name,'a')
+        log_file = open(log_name, 'a')
         log_file.write('\n' + message)
         log_file.close()
 
-    
-    # === Receive / handle args passed to this function from the commandline ===
+    # === Receive / handle args passed to this function from
+    # the commandline ===
 
     # If --debug specified, write console output to log file
 

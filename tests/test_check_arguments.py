@@ -2,16 +2,20 @@
 
 # Built-in
 
-import      pytest
+import pytest
 import sys
-from unittest.mock  import patch
+from unittest.mock import patch
 
 # Built for project
 
-from        internet_speed_tester       import      check_arguments
+from internet_speed_tester import check_arguments
 
 
-# Define acceptable arguments, and values that should be set to True once an argument is called
+# Define acceptable arguments, and values that should be set to
+# True once an argument is called
+# For each acceptable argument, test to make sure the expected setting
+# is returned True when the argument is called
+
 
 @pytest.mark.parametrize(('argument', 'expected_setting'), (
 
@@ -25,10 +29,6 @@ from        internet_speed_tester       import      check_arguments
     ('--verbose', 'verbose'),
 
 ))
-
-
-# For each acceptable argument, test to make sure the expected setting is returned True when the argument is called
-
 def test_arguments(argument, expected_setting):
 
     with patch('sys.argv', ['internet_speed_test', argument]):

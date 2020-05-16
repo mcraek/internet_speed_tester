@@ -2,38 +2,39 @@ def internet_speed_tester():
 
     # === Import required functions / libraries ===
 
-    # Built-in
+    # --- Built-in ---
 
-    from    datetime    import      datetime        # Used for logging current date / time of check
-    import                          subprocess      # Used for hiding console for --silent option
     import sys
 
-    # Functions built for project
+    # --- Functions built for project ---
 
-    from            check_arguments         import      check_arguments             # Parses arguments passed to program from commandline
-    from            set_logname             import      set_logname                 # Used with --log option to output verbose output to log file
-    from            output_progress         import      output_progress             # Used for verbose output to console / logfile
+    # Parse arguments passed from commandline
+    from check_arguments import check_arguments
 
+    # Used with --log option to output verbose output to log file
+    from set_logname import set_logname
+
+    # Used for verbose output to console / logfile with -v and -l args
+    from output_progress import output_progress
 
     # === Handle arguments passed to program / set defaults ===
 
     print(sys.argv[1:])
     args = vars(check_arguments(sys.argv[1:]))
 
-
-    # === Set log file name (output_progress requires this to be set regardless if -v or -l used or not) ===
+    # === Set log file name (output_progress requires this to be
+    # set regardless if -v or -l used or not) ===
 
     log_name = set_logname()
 
-
     # === Output welcome messages (requires verbose) ===
 
-    output_progress(args, '------------------- Internet Speed Test Checker v. 0.5 -------------------\n', log_name)
+    message = '---- Internet Speed Test Checker v. 0.5 ----\n'
+    output_progress(args, message, log_name)
 
+    message = '\n++++Starting speed test\n++++'
+    output_progress(args, message, log_name)
 
-
-    # output_progress(arguments_received, '------------------- Internet Speed Test Checker v. 0.5 -------------------\n', log_name)
-    # output_progress(arguments_received, 'Starting speed test timestamped: ' + str(date + '\n'), log_name)
 
 if __name__ == "__main__":
 

@@ -2,7 +2,7 @@ def print_msg(message):
 
     # === Import built-in dependencies ===
 
-    import      time
+    import time
 
     # === Begin function ===
 
