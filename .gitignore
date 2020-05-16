@@ -22,3 +22,5 @@ build/
 *.egg-info/
 
 bin/
+
+running_flake8_tests.txt
