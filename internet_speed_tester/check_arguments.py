@@ -1,4 +1,4 @@
-def check_arguments():
+def check_arguments(arguments):
 
     # === Import required functions / libraries ===
 
@@ -20,19 +20,9 @@ def check_arguments():
     parser.add_argument('-v', '--verbose', help='increases verbosity of console output',
                         action='store_true')
 
-    # Store / return arguments
+    # === Store / return arguments ===
 
     parsed_args = parser.parse_args()
 
     return parsed_args
-
-
-if __name__ != "__main__":
-
-    check_arguments()
-
-else:
-
-    pass
-       
 
