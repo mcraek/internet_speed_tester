@@ -1,6 +1,7 @@
 *.py[cod]
 *$py.class
 tempCodeRunnerFile.py
+*log*.txt
 
 env/
 venv/
