@@ -1,4 +1,4 @@
-def check_arguments(arguments):
+def check_arguments(argv=None):
 
     # === Import required functions / libraries ===
 
@@ -24,5 +24,5 @@ def check_arguments(arguments):
 
     parsed_args = parser.parse_args()
 
-    return parsed_args
 
+    return parsed_args

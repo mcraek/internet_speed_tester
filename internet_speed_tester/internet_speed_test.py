@@ -16,15 +16,14 @@ def internet_speed_tester():
 
 
     # === Handle arguments passed to program / set defaults ===
-    
+
+    print(sys.argv[1:])
     args = vars(check_arguments(sys.argv[1:]))
 
 
-    # === Set log file name (verbose option requires this as well) ===
+    # === Set log file name (output_progress requires this to be set regardless if -v or -l used or not) ===
 
-    if (args['log']) or (args['verbose']):
-
-        log_name = set_logname()
+    log_name = set_logname()
 
 
     # === Output welcome messages (requires verbose) ===
