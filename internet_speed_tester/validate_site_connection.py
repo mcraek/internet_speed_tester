@@ -15,13 +15,15 @@ def validate_site_connection(args, site, log_name):
     # --- Determine if connection to site was successful ---
 
     # Windows sends four echo requests by default. As long as all four
-    # are not lost, and an Average RTT is calculated return True to
-    # indicate a successful connection to the site.
-    # Any other issues, local or otherwise will return false as well
-    # as dropped pings
+    # are not lost return True
 
-    received_responses = ['Sent = 4', 'Received = 4' 'Average = ']
-    status = all(item in received_responses for item in ping_results)
+    if 'Sent = 4, Received = 4,' in ping_results:
+
+        status = True
+    
+    else:
+
+        status = False
 
     # --- Build / return class (object) containing connection test results ---
 
