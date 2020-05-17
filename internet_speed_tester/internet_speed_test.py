@@ -18,7 +18,7 @@ def internet_speed_tester():
     from output_progress import output_progress
 
     # Used for testing connection to fast.com
-    from test_site_connection import test_site_connection
+    from validate_site_connection import validate_site_connection
 
     # === Handle arguments passed to program / set defaults ===
 
@@ -36,13 +36,27 @@ def internet_speed_tester():
 
     # === Begin function ===
 
-    # --- Test connection to the fast.com ---
+    # --- Test connection to the fast.com, terminate if unsuccessful ---
 
     site = 'fast.com'
     message = '+++ Testing connection to ' + site + ' +++'
     output_progress(args, message, log_name)
 
-    test_site_connection(args, site, log_name)
+    # Builds class with ping, ping_result, and connection_status attributes
+    site_connection = validate_site_connection(args, site, log_name)
+
+    if site_connection.connection_successful:
+
+        message = 'Connection to ' + site + ' successful'
+        output_progress(args, message, log_name)
+
+    else:
+
+        message = site + ' appears to be online and reachable\n'
+        output_progress(args, message, log_name)
+        sys.exit()
+
+    # --- Begin speed test ---
 
     message = '++++ Starting speed test ++++'
     output_progress(args, message, log_name)
