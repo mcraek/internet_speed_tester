@@ -2,7 +2,11 @@ def test_site_connection(args, site, log_name):
 
     # === Import built-in dependencies ===
 
-    import subprocess # Allows running ping utility on Windows systems
+    # Allows running ping utility on Windows systems
+    import subprocess
+
+    # Used for terminating program
+    import sys
 
     # === Import funcitons built for project ===
 
@@ -12,15 +16,15 @@ def test_site_connection(args, site, log_name):
 
     # Run ping test to site received as argument
 
-    ping_test = subprocess.run([ 'ping', site ], capture_output=True)
+    ping_test = subprocess.run(['ping', site], capture_output=True)
 
     # Capture the stdout of the ping command run by cmd.exe on Windows
-    ping_results = ping_test.stdout.decode() 
+    ping_results = ping_test.stdout.decode()
 
     # Windows sends four echo requests by default. As long as all four
     # are not lost, return True to indicate a successful connection
 
-    if '%' in ping_results and 'Lost = 4' not in ping_results:  
+    if '%' in ping_results and 'Lost = 4' not in ping_results:
 
         connection_successful = True
 
@@ -31,9 +35,10 @@ def test_site_connection(args, site, log_name):
     # Terminate program if connection to site not established
     # otherwise continue the program
 
-    if connection_successful == False:
+    if not connection_successful:
 
-        message = 'Connection to ' + site + ' failed. Check your connection. Website may also be down...'
+        message = 'Connection to ' + site + ' successful'
+
         output_progress(args, message, log_name)
         sys.exit()
 

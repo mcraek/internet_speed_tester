@@ -41,11 +41,12 @@ def internet_speed_tester():
     site = 'fast.com'
     message = '+++ Testing connection to ' + site + ' +++'
     output_progress(args, message, log_name)
-    
+
     test_site_connection(args, site, log_name)
 
     message = '++++ Starting speed test ++++'
     output_progress(args, message, log_name)
+
 
 if __name__ == "__main__":
 
