@@ -12,7 +12,7 @@ def output_progress(args, message, log_name):
 
     # Print messages to console with auto time.sleep
 
-    from print_msg import print_msg
+    from internet_speed_tester import print_msg
 
     # === Define function for writing log messages to text
     # file in same directory as program ===
