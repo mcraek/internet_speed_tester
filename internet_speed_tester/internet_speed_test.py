@@ -17,9 +17,11 @@ def internet_speed_tester():
     # Used for verbose output to console / logfile with -v and -l args
     from output_progress import output_progress
 
+    # Used for testing connection to fast.com
+    from test_site_connection import test_site_connection
+
     # === Handle arguments passed to program / set defaults ===
 
-    print(sys.argv[1:])
     args = vars(check_arguments(sys.argv[1:]))
 
     # === Set log file name (output_progress requires this to be
@@ -29,12 +31,21 @@ def internet_speed_tester():
 
     # === Output welcome messages (requires verbose) ===
 
-    message = '---- Internet Speed Test Checker v. 0.5 ----\n'
+    message = '---- Internet Speed Test Checker v. 0.5 ----'
     output_progress(args, message, log_name)
 
-    message = '\n++++Starting speed test\n++++'
-    output_progress(args, message, log_name)
+    # === Begin function ===
 
+    # --- Test connection to the fast.com ---
+
+    site = 'fast.com'
+    message = '+++ Testing connection to ' + site + ' +++'
+    output_progress(args, message, log_name)
+    
+    test_site_connection(args, site, log_name)
+
+    message = '++++ Starting speed test ++++'
+    output_progress(args, message, log_name)
 
 if __name__ == "__main__":
 
