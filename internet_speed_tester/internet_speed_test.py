@@ -14,11 +14,14 @@ def internet_speed_tester():
     # Used with --log option to output verbose output to log file
     from set_logname import set_logname
 
-    # Used for verbose output to console / logfile with -v and -l args
+    # Verbose output to console / logfile with -v and -l args
     from output_progress import output_progress
 
-    # Used for testing connection to fast.com
+    # Tests connection to fast.com
     from validate_site_connection import validate_site_connection
+
+    # Sets IE zoom level for Selenium
+    from set_ie_zoom import set_ie_zoom
 
     # === Handle arguments passed to program / set defaults ===
 
@@ -55,6 +58,31 @@ def internet_speed_tester():
         message = site + ' appears to be online and reachable\n'
         output_progress(args, message, log_name)
         sys.exit()
+
+    # --- Set IE Zoom Level to 100% (Selenium requirement) ---
+
+    message = '+++ Checking IE Zoom Level is 100% for Selenium +++'
+    output_progress(args, message, log_name)
+
+    # Store original zoom level to return to if required
+    ie_original_zoom = set_ie_zoom(args, log_name, 'get_original_value')
+
+    # Update setting to 100% zoom level if required
+
+    if ie_original_zoom != 100000:
+
+        message = 'Internet Explorer zoom level is not 100%. ' + \
+        'This will be configured and reset back to the orginal ' + \
+        'setting after the speed test...\n'
+
+        output_progress(args, message, log_name)
+        set_ie_zoom(args, log_name, 'set_zoom') # Sets zoom to 100%
+
+    else:
+
+        message = 'Internet Explorer zoom level is 100% already.'
+        output_progress(args, message, log_name)
+
 
     # --- Begin speed test ---
 
