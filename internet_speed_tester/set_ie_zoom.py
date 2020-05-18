@@ -1,4 +1,4 @@
-def set_ie_zoom(args, log_name, option,zoom_value = 100000):
+def set_ie_zoom(args, log_name, option, zoom_value = 100000):
 
     # 100000 is the decimal equivalent of 100% for the DWORD reg key this edits
 
@@ -17,11 +17,6 @@ def set_ie_zoom(args, log_name, option,zoom_value = 100000):
     from output_progress import output_progress
 
     # === Begin function ===
-
-    # Define Registry key location & name
-
-    ie_key_location = r'Software\Microsoft\Internet Explorer\Zoom'
-    zoom_key_name = 'ZoomFactor'
 
     # Open up root key location in registry, full access & Define Key name for Editing
 

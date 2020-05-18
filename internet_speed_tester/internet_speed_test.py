@@ -4,6 +4,7 @@ def internet_speed_tester():
 
     # --- Built-in ---
 
+    # Used for terminating program in event of an error
     import sys
 
     # --- Functions built for project ---
@@ -20,8 +21,8 @@ def internet_speed_tester():
     # Tests connection to fast.com
     from validate_site_connection import validate_site_connection
 
-    # Sets IE zoom level for Selenium
-    from set_ie_zoom import set_ie_zoom
+    # Queries registry for Internet Explorer ZoomFactor key required by Selenium
+    from query_registry import query_registry
 
     # === Handle arguments passed to program / set defaults ===
 
@@ -64,25 +65,26 @@ def internet_speed_tester():
     message = '+++ Checking IE Zoom Level is 100% for Selenium +++'
     output_progress(args, message, log_name)
 
-    # Store original zoom level to return to if required
-    ie_original_zoom = set_ie_zoom(args, log_name, 'get_original_value')
+    # Attempt connection to registry / check for existence of ZoomFactor key
+    # Store connection to registry key if possible
 
-    # Update setting to 100% zoom level if required
+    message = 'Querying registry...'
+    output_progress(args, message, log_name)
 
-    if ie_original_zoom != 100000:
+    reg_info = query_registry(args, log_name)
 
-        message = 'Internet Explorer zoom level is not 100%. ' + \
-        'This will be configured and reset back to the orginal ' + \
-        'setting after the speed test...\n'
+    # If connected to registry, create / set ZoomFactor key value and store original
+    # value to return to
 
+    if (reg_info.registry_connected):
+
+        message = 'Connection to registry successful. Setting ZoomFactor key to 100%...'
         output_progress(args, message, log_name)
-        set_ie_zoom(args, log_name, 'set_zoom') # Sets zoom to 100%
 
     else:
 
-        message = 'Internet Explorer zoom level is 100% already.'
-        output_progress(args, message, log_name)
-
+        message = 'Unable to connect to registry for checking ZoomFactor value. Terminating speed test...'
+        sys.exit()
 
     # --- Begin speed test ---
 
