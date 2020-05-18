@@ -21,7 +21,8 @@ def internet_speed_tester():
     # Tests connection to fast.com
     from validate_site_connection import validate_site_connection
 
-    # Queries registry for Internet Explorer ZoomFactor key required by Selenium
+    # Queries registry for Internet Explorer ZoomFactor key
+    # required by Selenium
     from query_registry import query_registry
 
     # Sets ZoomFactor subkey value to 100%
@@ -76,18 +77,22 @@ def internet_speed_tester():
 
     reg_info = query_registry(args, log_name)
 
-    # If connected to registry, create / set ZoomFactor key value and store original
-    # value to return to
+    # If connected to registry, create / set ZoomFactor
+    # key value and store original value to return to
 
     if (reg_info.registry_connected):
 
-        message = 'Connection to registry successful. Ensuring ZoomFactor key is set to 100%...'
+        message = 'Connection to registry successful. ' + \
+            'Ensuring ZoomFactor key is set to 100%...'
+
         output_progress(args, message, log_name)
-        reg_changed = set_registry(args, reg_info, 'initial-set', log_name, zoom_factor_changed = False)
+        reg_changed = set_registry(
+            args, reg_info, 'initial-set', log_name, zoom_factor_changed=False)
 
     else:
 
-        message = 'Unable to connect to registry for checking ZoomFactor value. Terminating speed test...'
+        message = 'Unable to connect to registry for ' + \
+            'checking ZoomFactor value. Terminating speed test...'
         sys.exit()
 
     # --- Begin speed test ---
@@ -97,15 +102,20 @@ def internet_speed_tester():
 
     # --- After speed test, restore original IE ZoomFactor value ---
 
-    message = '+++ Checking if IE ZoomFactor registry value needs to be restored +++'
+    message = '+++ Checking if IE ZoomFactor registry ' + \
+        'value needs to be restored +++'
     output_progress(args, message, log_name)
 
     if reg_changed:
 
-        message = 'Restoring original IE ZoomFactor value (' + str(reg_info.ie_original_zoom) + ')'
+        message = 'Restoring original IE ZoomFactor ' + \
+            'value (' + str(reg_info.ie_original_zoom) + ')'
+
         output_progress(args, message, log_name)
 
-        set_registry(args, reg_info, 'restore-setting', log_name, zoom_factor_changed = False)
+        set_registry(
+            args, reg_info, 'restore-setting', log_name,
+            zoom_factor_changed=False)
 
     else:
 

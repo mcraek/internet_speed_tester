@@ -9,9 +9,6 @@ def query_registry(args, log_name):
     # Allows modifying HKCU reg key for setting IE zoom level
     import winreg
 
-    # Terminates program in event of an error
-    import sys
-
     # --- Built for project ---
 
     from output_progress import output_progress
@@ -38,7 +35,7 @@ def query_registry(args, log_name):
         registry_connected = True
         message = 'Connected to HKCU successfully'
         output_progress(args, message, log_name)
-        
+
     except:
 
         reg_connection = None
@@ -47,13 +44,14 @@ def query_registry(args, log_name):
         error += message
         registry_connected = False
 
-    # If connected to HKCU, determine if Zoom root key and ZoomFactor subkey exists
+    # If connected to HKCU, determine if Zoom root key
+    # and ZoomFactor subkey exists
 
     if registry_connected:
 
         message = 'Checking for HKCU:' + ie_key_location + ' registry key'
         output_progress(args, message, log_name)
-        
+
         # Check if root key exists
 
         try:
@@ -67,11 +65,11 @@ def query_registry(args, log_name):
 
             root_key = None
             root_key_exists = False
-            
+
             # If root key isn't found, the subkey will not exist either
             subkey_exists = False
             ie_original_zoom = None
-            
+
             message = 'Root key not found.'
             output_progress(args, message, log_name)
 
@@ -84,7 +82,8 @@ def query_registry(args, log_name):
             def connect_key(root_key):
 
                 ie_zoom_key_access = winreg.OpenKey(
-                    winreg.HKEY_CURRENT_USER, ie_key_location, 0, winreg.KEY_ALL_ACCESS)
+                    winreg.HKEY_CURRENT_USER,
+                    ie_key_location, 0, winreg.KEY_ALL_ACCESS)
 
                 return ie_zoom_key_access
 
@@ -100,7 +99,7 @@ def query_registry(args, log_name):
                 message = 'Subkey found.'
                 output_progress(args, message, log_name)
                 subkey_exists = True
-                
+
             except:
 
                 message = 'Subkey not found.'
@@ -108,11 +107,10 @@ def query_registry(args, log_name):
                 subkey_exists = False
                 ie_original_zoom = None
 
-
     # If no connection to registry made, set values to None
 
     else:
-        
+
         registry_connected = False
         reg_connection = None
         root_key = None
@@ -141,7 +139,8 @@ def query_registry(args, log_name):
 
     # Pass query results to class
 
-    query_result = build_class(registry_connected, reg_connection, root_key, 
-    root_key_exists, subkey_exists, ie_original_zoom)
+    query_result = build_class(
+        registry_connected, reg_connection, root_key, root_key_exists,
+        subkey_exists, ie_original_zoom)
 
     return query_result

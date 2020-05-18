@@ -20,7 +20,7 @@ def validate_site_connection(args, site, log_name):
     if 'Sent = 4, Received = 4,' in ping_results:
 
         status = True
-    
+
     else:
 
         status = False
