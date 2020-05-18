@@ -16,7 +16,6 @@ def query_registry(args, log_name):
 
     from output_progress import output_progress
 
-
     # === Begin function ===
 
     # Define reg key location & name
@@ -71,6 +70,7 @@ def query_registry(args, log_name):
             
             # If root key isn't found, the subkey will not exist either
             subkey_exists = False
+            ie_original_zoom = None
             
             message = 'Root key not found.'
             output_progress(args, message, log_name)

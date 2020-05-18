@@ -24,6 +24,9 @@ def internet_speed_tester():
     # Queries registry for Internet Explorer ZoomFactor key required by Selenium
     from query_registry import query_registry
 
+    # Sets ZoomFactor subkey value to 100%
+    from set_registry import set_registry
+
     # === Handle arguments passed to program / set defaults ===
 
     args = vars(check_arguments(sys.argv[1:]))
@@ -78,8 +81,9 @@ def internet_speed_tester():
 
     if (reg_info.registry_connected):
 
-        message = 'Connection to registry successful. Setting ZoomFactor key to 100%...'
+        message = 'Connection to registry successful. Ensuring ZoomFactor key is set to 100%...'
         output_progress(args, message, log_name)
+        reg_changed = set_registry(args, reg_info, 'initial-set', log_name, zoom_factor_changed = False)
 
     else:
 
@@ -90,6 +94,23 @@ def internet_speed_tester():
 
     message = '++++ Starting speed test ++++'
     output_progress(args, message, log_name)
+
+    # --- After speed test, restore original IE ZoomFactor value ---
+
+    message = '+++ Checking if IE ZoomFactor registry value needs to be restored +++'
+    output_progress(args, message, log_name)
+
+    if reg_changed:
+
+        message = 'Restoring original IE ZoomFactor value (' + str(reg_info.ie_original_zoom) + ')'
+        output_progress(args, message, log_name)
+
+        set_registry(args, reg_info, 'restore-setting', log_name, zoom_factor_changed = False)
+
+    else:
+
+        message = 'IE ZoomFactor key value unchanged during speed test'
+        output_progress(args, message, log_name)
 
 
 if __name__ == "__main__":
