@@ -36,7 +36,7 @@ def query_registry(args, log_name):
         message = 'Connected to HKCU successfully'
         output_progress(args, message, log_name)
 
-    except:
+    except Exception:
 
         reg_connection = None
         message = 'Failed to connect to HKCU'
@@ -61,7 +61,7 @@ def query_registry(args, log_name):
             message = 'Root key found.'
             output_progress(args, message, log_name)
 
-        except:
+        except Exception:
 
             root_key = None
             root_key_exists = False
@@ -100,7 +100,7 @@ def query_registry(args, log_name):
                 output_progress(args, message, log_name)
                 subkey_exists = True
 
-            except:
+            except Exception:
 
                 message = 'Subkey not found.'
                 output_progress(args, message, log_name)

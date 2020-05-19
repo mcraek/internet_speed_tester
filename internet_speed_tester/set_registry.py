@@ -7,6 +7,9 @@ def set_registry(args, reg_info, option, log_name, zoom_factor_changed=False):
     # Allows modifying HKCU reg key for setting IE zoom level
     import winreg
 
+    # Used for terminating speed test when Exception raised
+    import sys
+
     # --- Built for project ---
 
     from output_progress import output_progress
@@ -42,17 +45,34 @@ def set_registry(args, reg_info, option, log_name, zoom_factor_changed=False):
 
             message = 'Creating Zoom HKCU root key...'
             output_progress(args, message, log_name)
-            winreg.CreateKey(reg_info.reg_connection, ie_key_location)
+
+            try:
+
+                winreg.CreateKey(reg_info.reg_connection, ie_key_location)
+
+            except Exception:
+
+                message = 'Unable to create root key. Terminating speed test'
+                output_progress(args, message, log_name)
+                sys.exit()
 
         if not reg_info.subkey_exists:
 
             message = 'Creating ZoomFactor subkey...'
             output_progress(args, message, log_name)
 
-            ie_zoom_key_access = connect_key(reg_info.root_key)
-            winreg.SetValueEx(
-                ie_zoom_key_access, zoom_key_name,
-                0, winreg.REG_DWORD, zoom_value)
+            try:
+
+                ie_zoom_key_access = connect_key(reg_info.root_key)
+                winreg.SetValueEx(
+                    ie_zoom_key_access, zoom_key_name,
+                    0, winreg.REG_DWORD, zoom_value)
+
+            except Exception:
+
+                message = 'Unable to create subkey. Terminating speed test'
+                output_progress(args, message, log_name)
+                sys.exit()
 
         else:
 
@@ -68,11 +88,20 @@ def set_registry(args, reg_info, option, log_name, zoom_factor_changed=False):
                 message = 'Setting value to 10000 (100%)...'
                 output_progress(args, message, log_name)
 
-                ie_zoom_key_access = connect_key(reg_info.root_key)
-                winreg.SetValueEx(
-                    ie_zoom_key_access, zoom_key_name,
-                    0, winreg.REG_DWORD, zoom_value)
-                zoom_factor_changed = True
+                try:
+
+                    ie_zoom_key_access = connect_key(reg_info.root_key)
+                    winreg.SetValueEx(
+                        ie_zoom_key_access, zoom_key_name,
+                        0, winreg.REG_DWORD, zoom_value)
+                    zoom_factor_changed = True
+
+                except Exception:
+
+                    message = 'Unable to create root key. ' \
+                        + 'Terminating speed test'
+                    output_progress(args, message, log_name)
+                    sys.exit()
 
             else:
 
@@ -86,7 +115,16 @@ def set_registry(args, reg_info, option, log_name, zoom_factor_changed=False):
 
     elif option == 'restore-setting':
 
-        ie_zoom_key_access = connect_key(reg_info.root_key)
-        winreg.SetValueEx(
-            ie_zoom_key_access, zoom_key_name,
-            0, winreg.REG_DWORD, reg_info.ie_original_zoom)
+        try:
+
+            ie_zoom_key_access = connect_key(reg_info.root_key)
+            winreg.SetValueEx(
+                ie_zoom_key_access, zoom_key_name,
+                0, winreg.REG_DWORD, reg_info.ie_original_zoom)
+
+        except Exception:
+
+            message = 'Unable to restore original zoom value. ' \
+                + 'Terminating speed test'
+            output_progress(args, message, log_name)
+            sys.exit()
