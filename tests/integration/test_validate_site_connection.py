@@ -25,7 +25,7 @@ def test_ping():
     # attempting to run pytest until the function call was changed
     # to validate_site_connection.validate_site_connection
 
-    ping_test = validate_site_connection.validate_site_connection(
+    ping_test = validate_site_connection(
         'args', site, 'log_name')
 
     assert ping_test.ping.returncode == 0
@@ -49,7 +49,7 @@ def test_site_connection_response():
     # Run ping test to random site, validate
     # site_connection attribute set to False
 
-    ping_test = validate_site_connection.validate_site_connection(
+    ping_test = validate_site_connection(
         'args', test_site, 'log_name')
 
     assert not ping_test.connection_successful
@@ -61,7 +61,7 @@ def test_site_connection_response():
     # Run ping test to google to validate site_connection
     # attribute returns True
 
-    ping_test = validate_site_connection.validate_site_connection(
+    ping_test = validate_site_connection(
         'args', test_site, 'log_name')
 
     assert ping_test.connection_successful
