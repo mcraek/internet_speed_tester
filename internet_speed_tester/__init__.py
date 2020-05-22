@@ -1,1 +1,0 @@
-from .internet_speed_test import *

@@ -1,146 +1,107 @@
-def query_registry(args, log_name):
+ # Creates / returns class containing info on ZoomFactor registry key
 
-    # Creates / returns class containing info on ZoomFactor registry key
+# === Import required functions / libraries ===
 
-    # === Import required functions / libraries ===
+# --- Built-in ---
 
-    # --- Built-in ---
+# Allows modifying HKCU reg key for setting IE zoom level
+import winreg
 
-    # Allows modifying HKCU reg key for setting IE zoom level
-    import winreg
+# --- Built for project ---
 
-    # --- Built for project ---
+#from output_progress import output_progress
 
-    from output_progress import output_progress
+# === Begin function ===
 
-    # === Begin function ===
+# Define reg key location & name
 
-    # Define reg key location & name
+ie_key_location = r'Software\\Microsoft\\Internet Explorer\\Zoom'
+zoom_key_name = 'ZoomFactor'
 
-    ie_key_location = r'Software\\Microsoft\\Internet Explorer\\Zoom'
-    zoom_key_name = 'ZoomFactor'
+# Initialize error message variable
 
-    # Initialize error message variable
+error = ''
 
-    error = ''
+# Determine if HKCU can be connected to, store connection to return
 
-    # Determine if HKCU can be connected to, store connection to return
+def connect_registry():
 
     message = 'Attempting connection to HKCU hive'
-    output_progress(args, message, log_name)
+    print(message)
 
     try:
 
         reg_connection = winreg.ConnectRegistry(None, winreg.HKEY_CURRENT_USER)
-        registry_connected = True
         message = 'Connected to HKCU successfully'
-        output_progress(args, message, log_name)
+        print(message)
 
     except Exception:
 
         reg_connection = None
         message = 'Failed to connect to HKCU'
-        output_progress(args, message, log_name)
-        error += message
-        registry_connected = False
+        print(message)
 
-    # If connected to HKCU, determine if Zoom root key
-    # and ZoomFactor subkey exists
+    return reg_connection
 
-    if registry_connected:
+# Check if root key exists in registry
 
-        message = 'Checking for HKCU:' + ie_key_location + ' registry key'
-        output_progress(args, message, log_name)
+def check_root_key(reg_connection):
 
-        # Check if root key exists
+    message = 'Checking for HKCU:' + ie_key_location + ' registry key'
+    print(message)
 
-        try:
+    # Check if root key exists
 
-            root_key = winreg.OpenKey(reg_connection, ie_key_location)
-            root_key_exists = True
-            message = 'Root key found.'
-            output_progress(args, message, log_name)
+    try:
 
-        except Exception:
+        root_key = winreg.OpenKey(reg_connection, ie_key_location)
+        root_key_exists = True
 
-            root_key = None
-            root_key_exists = False
+        message = 'Root key found.'
+        print(message)
 
-            # If root key isn't found, the subkey will not exist either
-            subkey_exists = False
-            ie_original_zoom = None
+    except Exception:
 
-            message = 'Root key not found.'
-            output_progress(args, message, log_name)
+        root_key = None
+        root_key_exists = False
 
-        # If root key exists, check if subkey exists
+        message = 'Root key not found.'
+        print(message)
 
-        # Define function for connecting to root key for RW access to values
+    return root_key_exists, root_key
 
-        if root_key_exists:
+# Find subkey if root key exists and return ZoomFactor value
 
-            def connect_key(root_key):
+def check_subkey(reg_connection, root_key_exists, root_key):
 
-                ie_zoom_key_access = winreg.OpenKey(
-                    winreg.HKEY_CURRENT_USER,
-                    ie_key_location, 0, winreg.KEY_ALL_ACCESS)
+    if not root_key_exists:
 
-                return ie_zoom_key_access
-
-            # Connect to root key with RW access to values within
-
-            try:
-
-                ie_zoom_key_access = connect_key(root_key)
-
-                ie_original_zoom = (winreg.QueryValueEx(
-                    ie_zoom_key_access, zoom_key_name))[0]
-
-                message = 'Subkey found.'
-                output_progress(args, message, log_name)
-                subkey_exists = True
-
-            except Exception:
-
-                message = 'Subkey not found.'
-                output_progress(args, message, log_name)
-                subkey_exists = False
-                ie_original_zoom = None
-
-    # If no connection to registry made, set values to None
+        subkey_exists = False
+        ie_original_zoom = None
 
     else:
 
-        registry_connected = False
-        reg_connection = None
-        root_key = None
-        root_key_exists = None
-        subkey_exists = None
-        ie_original_zoom = None
+        try:
 
-    # Build class to return values in
+            ie_zoom_key_access = winreg.OpenKey(winreg.HKEY_CURRENT_USER, ie_key_location, 0, winreg.KEY_ALL_ACCESS)
+            ie_original_zoom = (winreg.QueryValueEx(ie_zoom_key_access, zoom_key_name))[0]
+            subkey_exists = True
+            message = 'Subkey found.'
+            print(message)
 
-    def build_class(a, b, c, d, e, f):
+        except Exception:
 
-        class RegistryQueryResults:
+            message = 'Subkey not found.'
+            print(message)
+            subkey_exists = False
+            ie_original_zoom = None
 
-            pass
+    return subkey_exists, ie_original_zoom
 
-        results = RegistryQueryResults()
 
-        results.registry_connected = a
-        results.reg_connection = b
-        results.root_key = c
-        results.root_key_exists = d
-        results.subkey_exists = e
-        results.ie_original_zoom = f
 
-        return results
 
-    # Pass query results to class
 
-    query_result = build_class(
-        registry_connected, reg_connection, root_key, root_key_exists,
-        subkey_exists, ie_original_zoom)
-
-    return query_result
+# If root key isn't found, the subkey will not exist either
+subkey_exists = False
+ie_original_zoom = None

@@ -1,32 +1,36 @@
+# === Import required functions / libraries ===
+
+# --- Built-in ---
+
+# Allow importing from other directories
+
+import sys
+
+sys.path += ['./misc_functions','./registry_functions',
+'./site_connection_functions','./web_scraping_functions']
+
+# --- Built for project ---
+
+# Parse arguments passed from commandline
+from check_arguments import check_arguments
+
+# Used with --log option to output verbose output to log file
+from set_logname import set_logname
+
+# Verbose output to console / logfile with -v and -l args
+from output_progress import output_progress
+
+# Tests connection to fast.com
+from validate_site_connection import validate_site_connection
+
+# Queries registry for Internet Explorer ZoomFactor key
+# required by Selenium
+from query_registry import query_registry
+
+# Sets ZoomFactor subkey value to 100%
+from set_registry import set_registry
+
 def internet_speed_tester():
-
-    # === Import required functions / libraries ===
-
-    # --- Built-in ---
-
-    # Used for terminating program in event of an error
-    import sys
-
-    # --- Functions built for project ---
-
-    # Parse arguments passed from commandline
-    from check_arguments import check_arguments
-
-    # Used with --log option to output verbose output to log file
-    from set_logname import set_logname
-
-    # Verbose output to console / logfile with -v and -l args
-    from output_progress import output_progress
-
-    # Tests connection to fast.com
-    from validate_site_connection import validate_site_connection
-
-    # Queries registry for Internet Explorer ZoomFactor key
-    # required by Selenium
-    from query_registry import query_registry
-
-    # Sets ZoomFactor subkey value to 100%
-    from set_registry import set_registry
 
     # === Handle arguments passed to program / set defaults ===
 

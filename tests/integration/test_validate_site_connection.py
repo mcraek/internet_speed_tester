@@ -10,7 +10,8 @@ import random
 
 # --- Built for project ---
 
-from internet_speed_tester import validate_site_connection
+from internet_speed_tester.internet_speed_tester import \
+validate_site_connection
 
 
 # Validate ping is callable
