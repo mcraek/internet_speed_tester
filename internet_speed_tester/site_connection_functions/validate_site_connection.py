@@ -1,23 +1,41 @@
+# === Import required functions / libraries ===
+
+# --- Built-in ---
+
+# Allows calling ping utility
+import subprocess
+
+
+# --- Built for project ---
+
+from output_progress import output_progress
+
+
 def validate_site_connection(args, site, log_name):
 
-    # === Import built-in dependencies ===
+    message = '+++ Testing connection to ' + site + ' +++'
+    output_progress(args, message, log_name)
 
-    # Allows running ping utility on Windows systems
-    import subprocess
+    # Initialize status message containing results of ping command
 
-    # === Begin Function ===
+    ping_results = ''
 
     # --- Run ping test to site and store raw command call / stdout ---
 
-    ping_test = subprocess.run(['ping', site], capture_output=True)
-    ping_results = ping_test.stdout.decode()
+    try:
+
+        ping_test = subprocess.run(['ping', site], capture_output=True)
+
+        # Capture stdout of the command
+        ping_results += str(ping_test.stdout.decode())
+
+    except Exception as e:
+
+        ping_results += str(e)
 
     # --- Determine if connection to site was successful ---
 
-    # Windows sends four echo requests by default. As long as all four
-    # are not lost return True
-
-    if 'Sent = 4, Received = 4,' in ping_results:
+    if ping_test.returncode == 0:
 
         status = True
 
@@ -25,24 +43,4 @@ def validate_site_connection(args, site, log_name):
 
         status = False
 
-    # --- Build / return class (object) containing connection test results ---
-
-    def build_class(a, b, c):
-
-        class ConnectionTestResults:
-
-            pass
-
-        results = ConnectionTestResults()
-
-        results.ping = a
-        results.ping_result = b
-        results.connection_successful = c
-
-        return results
-
-    # Pass ping test results including raw command call to class
-
-    connection_result = build_class(ping_test, ping_results, status)
-
-    return connection_result
+    return status, ping_results

@@ -2,7 +2,7 @@
 
 # --- Built-in ---
 
-# Allow importing from other directories
+# Allow importing from other directories, terminating program
 
 import sys
 
@@ -52,21 +52,26 @@ def internet_speed_tester():
     # --- Test connection to the fast.com, terminate if unsuccessful ---
 
     site = 'fast.com'
-    message = '+++ Testing connection to ' + site + ' +++'
-    output_progress(args, message, log_name)
+    site_up, ping_results = validate_site_connection(args, site, log_name)
 
-    # Builds class with ping, ping_result, and connection_status attributes
-    site_connection = validate_site_connection(args, site, log_name)
+    if site_up:
 
-    if site_connection.connection_successful:
+        message = site + ' appears to be online and reachable'
+        output_progress(args, message, log_name)
 
-        message = 'Connection to ' + site + ' successful'
+        message = '==========\n\nPing results: \n' + ping_results \
+            + '\n\n=========='
         output_progress(args, message, log_name)
 
     else:
 
-        message = site + ' appears to be online and reachable\n'
+        message = 'Unable to connect to ' + site
         output_progress(args, message, log_name)
+
+        message = '==========\n\nPing results: ' + ping_results \
+            + '\n\n=========='
+        output_progress(args, message, log_name)
+
         sys.exit()
 
     # --- Set IE Zoom Level to 100% (Selenium requirement) ---
