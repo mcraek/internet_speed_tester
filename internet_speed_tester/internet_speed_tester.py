@@ -23,9 +23,12 @@ from output_progress import output_progress
 # Tests connection to fast.com
 from validate_site_connection import validate_site_connection
 
-# Sets ZoomFact HKCU reg key for Internet Explorer Zoom
+# Sets ZoomFactor HKCU reg key for Internet Explorer Zoom
 # to 100% (Selenium Requirement)
 from config_registry import config_registry
+
+# Restores IE ZoomFactor if it was changed
+from set_registry import set_subkey_value
 
 
 def internet_speed_tester():
@@ -71,8 +74,8 @@ def internet_speed_tester():
     message = '+++ Checking IE Zoom Level is 100% for Selenium +++'
     output_progress(args, message, log_name)
 
-    ie_zoom_changed, ie_original_zoom = config_registry(args, log_name)
-    
+    registry = config_registry(args, log_name)
+
     # --- Begin speed test ---
 
     message = '++++ Starting speed test ++++'
@@ -80,16 +83,13 @@ def internet_speed_tester():
 
     # --- After speed test, restore original IE ZoomFactor value ---
 
-    if ie_zoom_changed:
+    if registry.subkey_set:
 
         message = '+++ Restoring original IE ZoomFactor value'
         output_progress(args, message, log_name)
-
-        
-
-
-
-
+        set_subkey_value(args, log_name, None,
+                         registry.ie_original_zoom,
+                         registry.root_key, 'restore')
 
 
 if __name__ == "__main__":

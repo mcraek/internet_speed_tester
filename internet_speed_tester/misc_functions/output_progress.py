@@ -1,4 +1,4 @@
-  # === Import required functions / libraries ===
+# === Import required functions / libraries ===
 
 # --- Built-in ---
 
@@ -15,22 +15,24 @@ from print_msg import print_msg
 # === Define function for writing log messages to text
 # file in same directory as program ===
 
-def write_log(log_msg):
 
-        # Check if log file exists already, create it if it doesn't
+def write_log(message, log_name):
 
-        log_check = os.path.exists('./' + log_name)
+    # Check if log file exists already, create it if it doesn't
 
-        if not log_check:
+    log_check = os.path.exists('./' + log_name)
 
-            log_file = open(log_name, 'w')
-            log_file.close()
+    if not log_check:
 
-        # Append message to log file
-
-        log_file = open(log_name, 'a')
-        log_file.write('\n' + message)
+        log_file = open(log_name, 'w')
         log_file.close()
+
+    # Append message to log file
+
+    log_file = open(log_name, 'a')
+    log_file.write('\n' + message)
+    log_file.close()
+
 
 def output_progress(args, message, log_name):
 

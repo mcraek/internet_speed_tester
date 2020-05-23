@@ -1,4 +1,4 @@
- # Creates / returns class containing info on ZoomFactor registry key
+# Creates / returns class containing info on ZoomFactor registry key
 
 # === Import required functions / libraries ===
 
@@ -24,6 +24,7 @@ error = ''
 
 # Determine if HKCU can be connected to, store connection to return
 
+
 def connect_registry(args, log_name):
 
     message = 'Attempting connection to HKCU hive'
@@ -35,15 +36,16 @@ def connect_registry(args, log_name):
         message = 'Connected to HKCU successfully'
         output_progress(args, message, log_name)
 
-    except Exception:
+    except Exception as e:
 
         reg_connection = None
-        message = 'Failed to connect to HKCU'
+        message = 'Failed to connect to HKCU.\nError Message: ' + str(e)
         output_progress(args, message, log_name)
 
     return reg_connection
 
 # Check if root key exists in registry
+
 
 def check_root_key(args, log_name, reg_connection):
 
@@ -60,17 +62,18 @@ def check_root_key(args, log_name, reg_connection):
         message = 'Root key found.'
         output_progress(args, message, log_name)
 
-    except Exception:
+    except Exception as e:
 
         root_key = None
         root_key_exists = False
 
-        message = 'Root key not found.'
+        message = 'Root key not found.\nError message: ' + str(e)
         output_progress(args, message, log_name)
 
     return root_key_exists, root_key
 
 # Find subkey if root key exists and return ZoomFactor value
+
 
 def check_subkey(args, log_name, reg_connection, root_key_exists, root_key):
 
@@ -83,15 +86,19 @@ def check_subkey(args, log_name, reg_connection, root_key_exists, root_key):
 
         try:
 
-            ie_zoom_key_access = winreg.OpenKey(winreg.HKEY_CURRENT_USER, ie_key_location, 0, winreg.KEY_ALL_ACCESS)
-            ie_original_zoom = (winreg.QueryValueEx(ie_zoom_key_access, zoom_key_name))[0]
+            ie_zoom_key_access = winreg.OpenKey(winreg.HKEY_CURRENT_USER,
+                                                ie_key_location, 0,
+                                                winreg.KEY_ALL_ACCESS)
+
+            ie_original_zoom = (winreg.QueryValueEx(ie_zoom_key_access,
+                                                    zoom_key_name))[0]
             subkey_exists = True
             message = 'Subkey found.'
             output_progress(args, message, log_name)
 
-        except Exception:
+        except Exception as e:
 
-            message = 'Subkey not found.'
+            message = 'Subkey not found.\nError message: ' + str(e)
             output_progress(args, message, log_name)
             subkey_exists = False
             ie_original_zoom = None

@@ -6,7 +6,7 @@ def print_msg(message):
 
     # === Begin function ===
 
-    time.sleep(1)
+    time.sleep(.5)
     print()
     print(message)
-    time.sleep(1)
+    time.sleep(.5)
