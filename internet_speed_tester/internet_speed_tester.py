@@ -6,8 +6,8 @@
 
 import sys
 
-sys.path += ['./misc_functions','./registry_functions',
-'./site_connection_functions','./web_scraping_functions']
+sys.path += ['./misc_functions', './registry_functions',
+             './site_connection_functions', './web_scraping_functions']
 
 # --- Built for project ---
 
@@ -23,12 +23,10 @@ from output_progress import output_progress
 # Tests connection to fast.com
 from validate_site_connection import validate_site_connection
 
-# Queries registry for Internet Explorer ZoomFactor key
-# required by Selenium
-from query_registry import query_registry
+# Sets ZoomFact HKCU reg key for Internet Explorer Zoom
+# to 100% (Selenium Requirement)
+from config_registry import config_registry
 
-# Sets ZoomFactor subkey value to 100%
-from set_registry import set_registry
 
 def internet_speed_tester():
 
@@ -73,32 +71,8 @@ def internet_speed_tester():
     message = '+++ Checking IE Zoom Level is 100% for Selenium +++'
     output_progress(args, message, log_name)
 
-    # Attempt connection to registry / check for existence of ZoomFactor key
-    # Store connection to registry key if possible
-
-    message = 'Querying registry...'
-    output_progress(args, message, log_name)
-
-    reg_info = query_registry(args, log_name)
-
-    # If connected to registry, create / set ZoomFactor
-    # key value and store original value to return to
-
-    if (reg_info.registry_connected):
-
-        message = 'Connection to registry successful. ' + \
-            'Ensuring ZoomFactor key is set to 100%...'
-
-        output_progress(args, message, log_name)
-        reg_changed = set_registry(
-            args, reg_info, 'initial-set', log_name, zoom_factor_changed=False)
-
-    else:
-
-        message = 'Unable to connect to registry for ' + \
-            'checking ZoomFactor value. Terminating speed test...'
-        sys.exit()
-
+    ie_zoom_changed, ie_original_zoom = config_registry(args, log_name)
+    
     # --- Begin speed test ---
 
     message = '++++ Starting speed test ++++'
@@ -106,25 +80,16 @@ def internet_speed_tester():
 
     # --- After speed test, restore original IE ZoomFactor value ---
 
-    message = '+++ Checking if IE ZoomFactor registry ' + \
-        'value needs to be restored +++'
-    output_progress(args, message, log_name)
+    if ie_zoom_changed:
 
-    if reg_changed:
-
-        message = 'Restoring original IE ZoomFactor ' + \
-            'value (' + str(reg_info.ie_original_zoom) + ')'
-
+        message = '+++ Restoring original IE ZoomFactor value'
         output_progress(args, message, log_name)
 
-        set_registry(
-            args, reg_info, 'restore-setting', log_name,
-            zoom_factor_changed=False)
+        
 
-    else:
 
-        message = 'IE ZoomFactor key value unchanged during speed test'
-        output_progress(args, message, log_name)
+
+
 
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@ import winreg
 
 # --- Built for project ---
 
-#from output_progress import output_progress
+from output_progress import output_progress
 
 # === Begin function ===
 
@@ -24,31 +24,31 @@ error = ''
 
 # Determine if HKCU can be connected to, store connection to return
 
-def connect_registry():
+def connect_registry(args, log_name):
 
     message = 'Attempting connection to HKCU hive'
-    print(message)
+    output_progress(args, message, log_name)
 
     try:
 
         reg_connection = winreg.ConnectRegistry(None, winreg.HKEY_CURRENT_USER)
         message = 'Connected to HKCU successfully'
-        print(message)
+        output_progress(args, message, log_name)
 
     except Exception:
 
         reg_connection = None
         message = 'Failed to connect to HKCU'
-        print(message)
+        output_progress(args, message, log_name)
 
     return reg_connection
 
 # Check if root key exists in registry
 
-def check_root_key(reg_connection):
+def check_root_key(args, log_name, reg_connection):
 
     message = 'Checking for HKCU:' + ie_key_location + ' registry key'
-    print(message)
+    output_progress(args, message, log_name)
 
     # Check if root key exists
 
@@ -58,7 +58,7 @@ def check_root_key(reg_connection):
         root_key_exists = True
 
         message = 'Root key found.'
-        print(message)
+        output_progress(args, message, log_name)
 
     except Exception:
 
@@ -66,13 +66,13 @@ def check_root_key(reg_connection):
         root_key_exists = False
 
         message = 'Root key not found.'
-        print(message)
+        output_progress(args, message, log_name)
 
     return root_key_exists, root_key
 
 # Find subkey if root key exists and return ZoomFactor value
 
-def check_subkey(reg_connection, root_key_exists, root_key):
+def check_subkey(args, log_name, reg_connection, root_key_exists, root_key):
 
     if not root_key_exists:
 
@@ -87,21 +87,13 @@ def check_subkey(reg_connection, root_key_exists, root_key):
             ie_original_zoom = (winreg.QueryValueEx(ie_zoom_key_access, zoom_key_name))[0]
             subkey_exists = True
             message = 'Subkey found.'
-            print(message)
+            output_progress(args, message, log_name)
 
         except Exception:
 
             message = 'Subkey not found.'
-            print(message)
+            output_progress(args, message, log_name)
             subkey_exists = False
             ie_original_zoom = None
 
     return subkey_exists, ie_original_zoom
-
-
-
-
-
-# If root key isn't found, the subkey will not exist either
-subkey_exists = False
-ie_original_zoom = None
