@@ -1,8 +1,9 @@
+# === Import built-in dependencies ===
+
+import time
+
+
 def print_msg(message):
-
-    # === Import built-in dependencies ===
-
-    import time
 
     # === Begin function ===
 

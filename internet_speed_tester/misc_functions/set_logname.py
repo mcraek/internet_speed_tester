@@ -1,8 +1,9 @@
+# === Import required functions / libraries ===
+
+from datetime import datetime
+
+
 def set_logname():
-
-    # === Import required functions / libraries ===
-
-    from datetime import datetime
 
     # === Form / return log filename
 

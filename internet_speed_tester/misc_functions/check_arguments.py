@@ -1,8 +1,9 @@
+# === Import required functions / libraries ===
+
+import argparse
+
+
 def check_arguments(argv=None):
-
-    # === Import required functions / libraries ===
-
-    import argparse
 
     # === Define valid arguments ===
 

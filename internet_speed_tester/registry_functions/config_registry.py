@@ -2,11 +2,14 @@
 
 # --- Built for project ---
 
-from query_registry import connect_registry, check_root_key, check_subkey
-from set_registry import create_root_key, create_subkey, set_subkey_value
+from internet_speed_tester.registry_functions.query_registry \
+    import connect_registry, check_root_key, check_subkey
 
+from internet_speed_tester.registry_functions.set_registry \
+    import create_root_key, create_subkey, set_subkey_value
 
 # Define function for returning class of info back
+
 
 def build_class(a, b, c):
 

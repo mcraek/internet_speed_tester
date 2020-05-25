@@ -6,7 +6,7 @@ from datetime import datetime
 
 # Built for project
 
-from internet_speed_tester import set_logname
+from internet_speed_tester.misc_functions import set_logname
 
 
 def test_set_logname():

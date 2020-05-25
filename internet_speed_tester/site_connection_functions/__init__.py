@@ -1,1 +1,1 @@
-from .validate_site_connection import *
+from .validate_site_connection import validate_site_connection

@@ -1,14 +1,17 @@
 # === Import required functions / libraries ===
 
-# Built-in
+# --- Built-in ---
+
+# Used for mocking commandline arguments being passed
+# to main
 
 import pytest
-import sys
 from unittest.mock import patch
+import sys
 
-# Built for project
+# --- Built for project ---
 
-from internet_speed_tester import check_arguments
+from internet_speed_tester.misc_functions import check_arguments
 
 
 # Define acceptable arguments, and values that should be set to

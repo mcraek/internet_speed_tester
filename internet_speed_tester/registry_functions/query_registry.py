@@ -9,7 +9,7 @@ import winreg
 
 # --- Built for project ---
 
-from output_progress import output_progress
+from internet_speed_tester.misc_functions import output_progress
 
 # === Begin function ===
 

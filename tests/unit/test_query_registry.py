@@ -1,5 +1,4 @@
 import unittest
-from internet_speed_tester.ok import test2
 from unittest.mock import patch
 
 # class TestRegQuery(unittest.TestCase):

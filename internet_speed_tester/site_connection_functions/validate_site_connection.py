@@ -5,10 +5,9 @@
 # Allows calling ping utility
 import subprocess
 
-
 # --- Built for project ---
 
-from output_progress import output_progress
+from internet_speed_tester.misc_functions import output_progress
 
 
 def validate_site_connection(args, site, log_name):

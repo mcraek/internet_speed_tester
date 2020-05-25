@@ -10,7 +10,7 @@ import os
 
 # Print messages to console with auto time.sleep
 
-from print_msg import print_msg
+from internet_speed_tester.misc_functions import print_msg
 
 # === Define function for writing log messages to text
 # file in same directory as program ===
@@ -43,7 +43,7 @@ def output_progress(args, message, log_name):
 
     if args['log']:
 
-        write_log(message)
+        write_log(message, log_name)
 
     # If --verbose specified, write output to console
 

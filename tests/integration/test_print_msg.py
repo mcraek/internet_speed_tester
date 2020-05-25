@@ -1,13 +1,13 @@
 # === Import required functions / libraries ===
 
-# Built-in
+# --- Built-in ---
 
 import contextlib
 import io
 
-# Built for project
+# --- Built for project ---
 
-from internet_speed_tester import print_msg
+from internet_speed_tester.misc_functions import print_msg
 
 
 # Provide test message to print function, validate

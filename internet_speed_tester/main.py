@@ -2,33 +2,30 @@
 
 # --- Built-in ---
 
-# Allow importing from other directories, terminating program
-
+# Passes commandline arguments to argument handler
 import sys
-
-sys.path += ['./misc_functions', './registry_functions',
-             './site_connection_functions', './web_scraping_functions']
 
 # --- Built for project ---
 
 # Parse arguments passed from commandline
-from check_arguments import check_arguments
+from internet_speed_tester.misc_functions import check_arguments
 
 # Used with --log option to output verbose output to log file
-from set_logname import set_logname
+from internet_speed_tester.misc_functions import set_logname
 
 # Verbose output to console / logfile with -v and -l args
-from output_progress import output_progress
+from internet_speed_tester.misc_functions import output_progress
 
 # Tests connection to fast.com
-from validate_site_connection import validate_site_connection
+from internet_speed_tester.site_connection_functions \
+    import validate_site_connection
 
 # Sets ZoomFactor HKCU reg key for Internet Explorer Zoom
 # to 100% (Selenium Requirement)
-from config_registry import config_registry
+from internet_speed_tester.registry_functions import config_registry
 
 # Restores IE ZoomFactor if it was changed
-from set_registry import set_subkey_value
+from internet_speed_tester.registry_functions import set_subkey_value
 
 
 def internet_speed_tester():
