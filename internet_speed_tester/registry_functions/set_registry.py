@@ -21,13 +21,26 @@ zoom_value = 10000
 # Define function for connecting to root key for RW access to values
 
 
-def connect_key(root_key):
+def connect_key(args, log_name, root_key):
 
-    ie_zoom_key_access = winreg.OpenKey(
-        winreg.HKEY_CURRENT_USER, ie_key_location,
-        0, winreg.KEY_ALL_ACCESS)
+    try:
 
-    return ie_zoom_key_access
+        ie_zoom_key_access = winreg.OpenKey(
+            winreg.HKEY_CURRENT_USER, ie_key_location,
+            0, winreg.KEY_ALL_ACCESS)
+
+        return ie_zoom_key_access
+
+    except Exception as e:
+
+        message = 'Unable to connect to root key. ' \
+            + 'Terminating speed test.\nError message: ' + str(e)
+        output_progress(args, message, log_name)
+
+        ie_zoom_key_access = None
+
+        sys.exit()
+
 
 
 # --- Create root key if it doesn't exist ---
