@@ -31,7 +31,8 @@ def test_connect_registry():
 
 def test_connect_registry_error():
 
-    with patch('internet_speed_tester.registry_functions.query_registry.winreg.ConnectRegistry', unittest.mock.MagicMock(side_effect=OSError)):
+    with patch('internet_speed_tester.registry_functions.query_registry.winreg.ConnectRegistry',
+               unittest.mock.MagicMock(side_effect=OSError)):
 
         reg_connection = connect_registry(
             {'log': False, 'verbose': False}, 'log')
@@ -59,7 +60,8 @@ def test_check_root_key():
 
 def test_check_root_key_error():
 
-    with patch('internet_speed_tester.registry_functions.query_registry.winreg.OpenKey', unittest.mock.MagicMock(side_effect=OSError)):
+    with patch('internet_speed_tester.registry_functions.query_registry.winreg.OpenKey',
+               unittest.mock.MagicMock(side_effect=OSError)):
 
         reg_connection = connect_registry(
             {'log': False, 'verbose': False}, 'log')
@@ -119,7 +121,8 @@ def test_check_subkey_2():
 
 def test_check_subkey_error():
 
-    with patch('internet_speed_tester.registry_functions.query_registry.winreg.QueryValueEx', unittest.mock.MagicMock(side_effect=OSError)):
+    with patch('internet_speed_tester.registry_functions.query_registry.winreg.QueryValueEx',
+               unittest.mock.MagicMock(side_effect=OSError)):
 
         reg_connection = connect_registry(
             {'log': False, 'verbose': False}, 'log')

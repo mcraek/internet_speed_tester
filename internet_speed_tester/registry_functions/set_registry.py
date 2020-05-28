@@ -42,7 +42,6 @@ def connect_key(args, log_name, root_key):
         sys.exit()
 
 
-
 # --- Create root key if it doesn't exist ---
 
 
@@ -80,7 +79,7 @@ def create_subkey(args, log_name, subkey_exists, root_key):
 
         try:
 
-            ie_zoom_key_access = connect_key(root_key)
+            ie_zoom_key_access = connect_key(args, log_name, root_key)
             winreg.SetValueEx(
                 ie_zoom_key_access, zoom_key_name,
                 0, winreg.REG_DWORD, zoom_value)
@@ -115,7 +114,7 @@ def set_subkey_value(args, log_name, value,
 
         try:
 
-            ie_zoom_key_access = connect_key(root_key)
+            ie_zoom_key_access = connect_key(args, log_name, root_key)
             winreg.SetValueEx(
                 ie_zoom_key_access, zoom_key_name,
                 0, winreg.REG_DWORD, zoom_value)
@@ -134,7 +133,7 @@ def set_subkey_value(args, log_name, value,
 
         try:
 
-            ie_zoom_key_access = connect_key(root_key)
+            ie_zoom_key_access = connect_key(args, log_name, root_key)
             winreg.SetValueEx(
                 ie_zoom_key_access, zoom_key_name,
                 0, winreg.REG_DWORD, ie_original_zoom)
