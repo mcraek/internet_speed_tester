@@ -78,10 +78,12 @@ def internet_speed_tester():
 
     registry = config_registry(args, log_name)
 
-    # --- Begin speed test ---
+    # --- Start Selenium session to fast.com, pull return speed values ---
 
     message = '++++ Starting speed test ++++'
     output_progress(args, message, log_name)
+
+    
 
     # --- After speed test, restore original IE ZoomFactor value ---
 

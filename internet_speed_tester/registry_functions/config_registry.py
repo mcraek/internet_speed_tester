@@ -58,7 +58,7 @@ def config_registry(args, log_name):
 
     # If ZoomFactor subkey exists already, ensure this is set to 100%
 
-    subkey_set = set_subkey_value(args, log_name, 10000,
+    subkey_set = set_subkey_value(args, log_name, 100000,
                                   ie_original_zoom, root_key,
                                   'config')
 

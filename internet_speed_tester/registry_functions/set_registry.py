@@ -16,7 +16,7 @@ from internet_speed_tester.misc_functions import output_progress
 
 ie_key_location = r'Software\\Microsoft\\Internet Explorer\\Zoom'
 zoom_key_name = 'ZoomFactor'
-zoom_value = 10000
+zoom_value = 100000
 
 # Define function for connecting to root key for RW access to values
 
@@ -104,7 +104,7 @@ def create_subkey(args, log_name, subkey_exists, root_key):
 def set_subkey_value(args, log_name, value,
                      ie_original_zoom, root_key, option):
 
-    if option == 'config' and ie_original_zoom != 10000:
+    if option == 'config' and ie_original_zoom != 100000:
 
         message = 'Current IE ZoomFactor is ' + str(ie_original_zoom)
         output_progress(args, message, log_name)
