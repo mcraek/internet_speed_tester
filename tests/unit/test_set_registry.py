@@ -101,12 +101,15 @@ class TestCreateRootKeyError(unittest.TestCase):
 
 def test_create_subkey_1():
 
-    subkey_exists = True
+    with patch('internet_speed_tester.registry_functions.set_registry.winreg'):
 
-    subkey_created = create_subkey(args, log,
-                                   subkey_exists, mocked_root_key)
+        subkey_exists = True
 
-    assert not subkey_created
+        subkey_created = create_subkey(args, log,
+                                       subkey_exists, 
+                                       mocked_root_key)
+
+        assert not subkey_created
 
 
 # Test working create_subkey returns True / creates subkey if it doesn't exist
@@ -145,7 +148,7 @@ class TestCreateSubkeyError(unittest.TestCase):
 
 def test_set_subkey_value_1():
 
-    ie_original_zoom = 10000
+    ie_original_zoom = 100000
     option = 'config'
 
     subkey_set = set_subkey_value(args, log, 1,

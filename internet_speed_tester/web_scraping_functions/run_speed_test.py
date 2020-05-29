@@ -1,4 +1,5 @@
-from internet_speed_tester.web_scraping_functions.initialize_ie_session import initialize_ie_session
+from internet_speed_tester.web_scraping_functions.initialize_ie_session \
+    import initialize_ie_session
 
 
 def run_speed_test():

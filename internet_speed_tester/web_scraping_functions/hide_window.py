@@ -1,11 +1,13 @@
-# ============================== Import Dependencies ============================== #
+# Import dependencies
 
 # 3rd party modules installed as part of this project
 
-import      win32gui		# Used for hiding console for --silent option (installed with pip install pywin32)
-import subprocess
+# Used for hiding console for --silent option
+# (installed with pip install pywin32)
+import win32gui
 
 window_name = 'WebDriver - Internet Explorer'
+
 
 def window_enum_handler(hwnd, all_windows):
 

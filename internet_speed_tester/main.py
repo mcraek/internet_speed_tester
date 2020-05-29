@@ -83,8 +83,6 @@ def internet_speed_tester():
     message = '++++ Starting speed test ++++'
     output_progress(args, message, log_name)
 
-    
-
     # --- After speed test, restore original IE ZoomFactor value ---
 
     if registry.subkey_set:
