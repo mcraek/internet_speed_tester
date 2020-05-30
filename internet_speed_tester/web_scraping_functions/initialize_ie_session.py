@@ -10,7 +10,7 @@ import sys
 from internet_speed_tester.misc_functions import output_progress
 from internet_speed_tester.misc_functions import get_path
 from internet_speed_tester.web_scraping_functions.hide_window \
-    import hide_window
+    import hide_ie_window
 
 # 3rd party functions installed to project Python executable
 
@@ -25,17 +25,19 @@ from selenium.webdriver.ie.options import Options
 # back to pass to other functions
 
 
-def initialize_ie_session():
+def start_ie_session(args, log_name):
 
     message = 'Establishing Internet Explorer session...'
-    print(message)
+    output_progress(args, message, log_name)
 
     try:
 
         # Define driver location for Python to use
         # (relative to function directory)
-        ie_driver = get_path('../../config/drivers/IEDriverServer.exe')
 
+        driver_location = '../../config/drivers/IEDriverServer.exe'
+        ie_driver = get_path(driver_location)
+        
         # Define option specifying Selenium should not require IE
         # to have Protected Mode enabled on all zones within
         # Internet Options/Security, otherwise program errors
@@ -47,19 +49,19 @@ def initialize_ie_session():
         ie = webdriver.Ie(executable_path=ie_driver, options=ie_options)
 
         # Hide IE Window
-        hide_window()
+        hide_ie_window(args, log_name)
 
         message = 'IE session started\n'
-        print(message)
+        output_progress(args, message, log_name)
 
         return ie
 
     except Exception as e:
 
         message = 'Error starting Selenium Internet Explorer option. ' + \
-            'Cannot locate IEDriverServer.exe within ' + ie_driver + \
+            'Cannot locate IEDriverServer.exe within ' + driver_location + \
             'Error message: ' + str(e)
-        print(message)
+        output_progress(args, message, log_name)
 
         sys.exit()
 

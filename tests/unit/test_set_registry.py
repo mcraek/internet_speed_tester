@@ -106,7 +106,7 @@ def test_create_subkey_1():
         subkey_exists = True
 
         subkey_created = create_subkey(args, log,
-                                       subkey_exists, 
+                                       subkey_exists,
                                        mocked_root_key)
 
         assert not subkey_created

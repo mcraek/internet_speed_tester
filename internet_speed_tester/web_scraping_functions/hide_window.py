@@ -6,6 +6,11 @@
 # (installed with pip install pywin32)
 import win32gui
 
+# --- Built for project ---
+
+from internet_speed_tester.misc_functions import output_progress
+
+
 window_name = 'WebDriver - Internet Explorer'
 
 
@@ -19,11 +24,26 @@ def window_enum_handler(hwnd, all_windows):
         all_windows.append((hwnd, window_text, class_name))
 
 
-def hide_window():
+def hide_ie_window(args, log_name):
 
-    all_windows = []
-    win32gui.EnumWindows(window_enum_handler, all_windows)
+    try:
+        
+        message = 'Attempting to hide IE window...'
+        output_progress(args, message, log_name)
 
-    for hwnd, text, class_name in all_windows:
+        all_windows = []
+        win32gui.EnumWindows(window_enum_handler, all_windows)
 
-        win32gui.ShowWindow(hwnd, False)
+        for hwnd, text, class_name in all_windows:
+
+            win32gui.ShowWindow(hwnd, False)
+
+        return True
+
+    except Exception as e:
+
+        message = 'Unable to hide IE window. Proceeeding with test. ' + \
+            'Error message: ' + str(e)
+        output_progress(args, message, log_name)
+
+        return False
