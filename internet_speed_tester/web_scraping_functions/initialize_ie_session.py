@@ -33,9 +33,9 @@ def start_ie_session(args, log_name):
     try:
 
         # Define driver location for Python to use
-        # (relative to function directory)
+        # (relative to direcotry of main.py)
 
-        driver_location = '../../config/drivers/IEDriverServer.exe'
+        driver_location = '../config/drivers/IEDriverServer.exe'
         ie_driver = get_path(driver_location)
         
         # Define option specifying Selenium should not require IE
@@ -49,12 +49,12 @@ def start_ie_session(args, log_name):
         ie = webdriver.Ie(executable_path=ie_driver, options=ie_options)
 
         # Hide IE Window
-        hide_ie_window(args, log_name)
+        window_hidden = hide_ie_window(args, log_name)
 
         message = 'IE session started\n'
         output_progress(args, message, log_name)
 
-        return ie
+        return ie, window_hidden
 
     except Exception as e:
 

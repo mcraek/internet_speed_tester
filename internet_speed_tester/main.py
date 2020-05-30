@@ -27,6 +27,9 @@ from internet_speed_tester.registry_functions import config_registry
 # Restores IE ZoomFactor if it was changed
 from internet_speed_tester.registry_functions import set_subkey_value
 
+# Runs speed test and returns results using selenium
+from internet_speed_tester.web_scraping_functions import run_speed_test
+
 
 def internet_speed_tester():
 
@@ -82,6 +85,10 @@ def internet_speed_tester():
 
     message = '++++ Starting speed test ++++'
     output_progress(args, message, log_name)
+
+    results = run_speed_test(args, log_name)
+
+
 
     # --- After speed test, restore original IE ZoomFactor value ---
 
