@@ -22,11 +22,11 @@ def test_start_ie_session():
 
     # This requires IE ZoomFactor level be set to 100%
 
-    set_reg = config_registry(args, log)
+    reg_info = config_registry(args, log)
 
     # Test start_ie_session
 
-    browser_instance, window_hidden = start_ie_session(args, log)
+    browser_instance, window_hidden = start_ie_session(args, log, reg_info.ie_original_zoom)
 
     assert browser_instance is not None
     assert window_hidden

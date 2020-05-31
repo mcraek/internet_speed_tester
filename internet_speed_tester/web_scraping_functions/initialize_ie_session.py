@@ -8,9 +8,9 @@ import sys
 # --- Built for project ---
 
 from internet_speed_tester.misc_functions import output_progress
-from internet_speed_tester.misc_functions import get_path
-from internet_speed_tester.web_scraping_functions.hide_window \
-    import hide_ie_window
+from internet_speed_tester.misc_functions.get_filepath import get_path
+from internet_speed_tester.web_scraping_functions.hide_window import hide_ie_window
+from internet_speed_tester.web_scraping_functions.terminate_web_session import terminate_web_session
 
 # 3rd party functions installed to project Python executable
 
@@ -25,7 +25,7 @@ from selenium.webdriver.ie.options import Options
 # back to pass to other functions
 
 
-def start_ie_session(args, log_name):
+def start_ie_session(args, log_name, ie_original_zoom):
 
     message = 'Establishing Internet Explorer session...'
     output_progress(args, message, log_name)
@@ -51,7 +51,7 @@ def start_ie_session(args, log_name):
         # Hide IE Window
         window_hidden = hide_ie_window(args, log_name)
 
-        message = 'IE session started\n'
+        message = 'IE session started'
         output_progress(args, message, log_name)
 
         return ie, window_hidden
@@ -63,7 +63,10 @@ def start_ie_session(args, log_name):
             'Error message: ' + str(e)
         output_progress(args, message, log_name)
 
-        sys.exit()
+        browser_instance = None
+
+        terminate_web_session(args, log_name, 'error', ie_original_zoom, browser_instance)
+        
 
 
 if __name__ == '__main__':

@@ -4,6 +4,7 @@
 
 import unittest
 from unittest.mock import patch
+from unittest.mock import Mock
 
 # --- Built for project ---
 
@@ -22,7 +23,9 @@ def test_start_ie_session():
 
     with patch('internet_speed_tester.web_scraping_functions.initialize_ie_session.webdriver'):
 
-        session = start_ie_session(args, log)
+        reg_info = Mock()
+        
+        session = start_ie_session(args, log, reg_info)
         assert session is not None
 
 
@@ -37,4 +40,5 @@ class TestStartIESessionError(unittest.TestCase):
 
             with self.assertRaises(SystemExit):
 
-                start_ie_session(args, log)
+                reg_info = Mock()
+                start_ie_session(args, log, reg_info)

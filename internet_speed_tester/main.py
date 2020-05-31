@@ -30,6 +30,9 @@ from internet_speed_tester.registry_functions import set_subkey_value
 # Runs speed test and returns results using selenium
 from internet_speed_tester.web_scraping_functions import run_speed_test
 
+# Terminates IE Browser instance started with Selenium
+from internet_speed_tester.web_scraping_functions import terminate_web_session
+
 
 def internet_speed_tester():
 
@@ -86,19 +89,14 @@ def internet_speed_tester():
     message = '++++ Starting speed test ++++'
     output_progress(args, message, log_name)
 
-    results = run_speed_test(args, log_name)
+    results = run_speed_test(args, log_name, registry)
 
+    # --- Terminate IE browser instance / restore IE origianl ZoomFactor
 
+    message = '++++ Terminating IE Browser Instance ++++'
+    output_progress(args, message, log_name)
 
-    # --- After speed test, restore original IE ZoomFactor value ---
-
-    if registry.subkey_set:
-
-        message = '+++ Restoring original IE ZoomFactor value'
-        output_progress(args, message, log_name)
-        set_subkey_value(args, log_name, None,
-                         registry.ie_original_zoom,
-                         registry.root_key, 'restore')
+    terminate_web_session(args, log_name, 'graceful', registry, results.session)
 
 
 if __name__ == "__main__":
