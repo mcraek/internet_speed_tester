@@ -3,11 +3,13 @@
 from internet_speed_tester.web_scraping_functions.initialize_ie_session import start_ie_session
 from internet_speed_tester.web_scraping_functions.navigate_to_site import go_to_site
 from internet_speed_tester.web_scraping_functions.read_site import wait
+from internet_speed_tester.web_scraping_functions.read_site import get_download_speed
+from internet_speed_tester.web_scraping_functions.read_site import get_upload_speed
 
 # Define function for returning class of info back
 
 
-def build_class(a):
+def build_class(a, b, c):
 
     class SpeedTestResults:
 
@@ -16,9 +18,8 @@ def build_class(a):
     results = SpeedTestResults()
 
     results.session = a
-    # results.error_message = b
-    # # reg.ie_original_zoom = b
-    # # reg.root_key = c
+    results.download_speed = b
+    results.upload_speed = c
 
     return results
 
@@ -27,7 +28,7 @@ def run_speed_test(args, log_name, registry):
 
     # Start IE Browser
 
-    session, window_hidden = start_ie_session(args, log_name, registry.ie_original_zoom)
+    session, window_hidden = start_ie_session(args, log_name, registry)
 
     # Navigate to fast.com
 
@@ -36,18 +37,21 @@ def run_speed_test(args, log_name, registry):
 
     # Wait for site to finish loading
 
-    wait(args, log_name, session, registry.ie_original_zoom)
+    wait(args, log_name, session, registry)
 
     # Start speed test, get download speed
 
-    
+    download_speed = get_download_speed(args, log_name, session, registry)
+
+    # Get upload speed
+
+    upload_speed = get_upload_speed(args, log_name, session, registry)
 
     # Return class containing speed test results
 
-    results = build_class(session)
+    results = build_class(session, download_speed, upload_speed)
 
     return results
-
 
 
 if __name__ == '__main__':

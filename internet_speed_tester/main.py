@@ -91,6 +91,14 @@ def internet_speed_tester():
 
     results = run_speed_test(args, log_name, registry)
 
+    # Output speed test results
+
+    message = '++++ Speed test complete! Here are the results:  ++++\n\n' \
+        + 'Download speed (MB / s): ' + str(results.download_speed) + '\n' \
+            +'Upload speed (MB / s): ' + str(results.upload_speed)
+
+    output_progress(args, message, log_name)
+
     # --- Terminate IE browser instance / restore IE origianl ZoomFactor
 
     message = '++++ Terminating IE Browser Instance ++++'

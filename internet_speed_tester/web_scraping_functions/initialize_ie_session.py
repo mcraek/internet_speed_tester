@@ -25,7 +25,7 @@ from selenium.webdriver.ie.options import Options
 # back to pass to other functions
 
 
-def start_ie_session(args, log_name, ie_original_zoom):
+def start_ie_session(args, log_name, registry):
 
     message = 'Establishing Internet Explorer session...'
     output_progress(args, message, log_name)
@@ -65,7 +65,7 @@ def start_ie_session(args, log_name, ie_original_zoom):
 
         browser_instance = None
 
-        terminate_web_session(args, log_name, 'error', ie_original_zoom, browser_instance)
+        terminate_web_session(args, log_name, 'error', registry, browser_instance)
         
 
 
