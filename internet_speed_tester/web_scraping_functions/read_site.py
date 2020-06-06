@@ -59,14 +59,16 @@ def wait(args, log_name, browser_instance, registry):
 
     try:
 
-            element = WebDriverWait(browser_instance, 120).until(
+        element = WebDriverWait(browser_instance, 120).until(
 
-                EC.element_to_be_clickable( (By.ID, site_loaded_element_id) )
+            EC.element_to_be_clickable( (By.ID, site_loaded_element_id) )
 
-            )
+        )
 
-            message = 'The page has fully loaded\n'
-            output_progress(args, message, log_name)
+        message = 'The page has fully loaded\n'
+        output_progress(args, message, log_name)
+
+        return True
 
     except Exception as e:
 
@@ -171,8 +173,6 @@ def get_upload_speed(args, log_name, browser_instance, registry):
         message = 'Failed to start upload test by clicking link with HTML ID: ' + upload_link_id + ' with text contents of: ' \
             + upload_link_text + '. Perhaps something has changed HTML-wise for this' + '\nError message: ' + str(e)
         output_progress(arguments_received, message, log_name)
-
-        end_web_session(arguments_received, log_name, 'error', ie_original_zoom, browser_instance)
 
         end_web_session(args, log_name, 'error', registry, browser_instance)
 
