@@ -8,7 +8,7 @@ import sys
 # --- Built for project ---
 
 from internet_speed_tester.misc_functions import output_progress
-from internet_speed_tester.web_scraping_functions import terminate_web_session
+from internet_speed_tester.web_scraping_functions.terminate_web_session import end_web_session
 
 def go_to_site(args, log_name, registry, browser_instance, site):
 
@@ -23,5 +23,4 @@ def go_to_site(args, log_name, registry, browser_instance, site):
     except Exception as e:
 
         message = 'Unable to navigate to ' + site + 'Error: ' + str(e)
-        return False
-        terminate_web_session(args, log_name, 'error', registry, browser_instance)
+        end_web_session(args, log_name, 'error', registry, browser_instance)

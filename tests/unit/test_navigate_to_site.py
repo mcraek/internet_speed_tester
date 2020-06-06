@@ -21,6 +21,8 @@ log = "log"
 
 def test_navigate_to_site():
 
+    # Validate navigate_to_site returns True when site is reachable
+
     reg_info = Mock()
     browser_instance = Mock()
 
@@ -29,11 +31,16 @@ def test_navigate_to_site():
     assert site
 
 
-def test_navigate_to_site_error():
-        
-    reg_info = None
-    browser_instance = None
+class TestNavigateToSiteError(unittest.TestCase):
 
-    site = 'fast.com'
-    site = go_to_site(args, log, reg_info, browser_instance, site)
-    assert not site
+    # Validate navigate_to_site calls end_web_session when site is not reachable
+
+    @patch('internet_speed_tester.web_scraping_functions.navigate_to_site.end_web_session')
+    def test_navigate_to_site_error(self, mocked_end_web_session):
+               
+        reg_info = None
+        browser_instance = None
+
+        site = 'fast.com'
+        site = go_to_site(args, log, reg_info, browser_instance, site)
+        self.assertTrue(mocked_end_web_session.called)

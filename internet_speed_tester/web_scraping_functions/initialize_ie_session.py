@@ -10,7 +10,7 @@ import sys
 from internet_speed_tester.misc_functions import output_progress
 from internet_speed_tester.misc_functions.get_filepath import get_path
 from internet_speed_tester.web_scraping_functions.hide_window import hide_ie_window
-from internet_speed_tester.web_scraping_functions.terminate_web_session import terminate_web_session
+from internet_speed_tester.web_scraping_functions.terminate_web_session import end_web_session
 
 # 3rd party functions installed to project Python executable
 
@@ -65,7 +65,7 @@ def start_ie_session(args, log_name, registry):
 
         browser_instance = None
 
-        terminate_web_session(args, log_name, 'error', registry, browser_instance)
+        end_web_session(args, log_name, 'error', registry, browser_instance)
         
 
 

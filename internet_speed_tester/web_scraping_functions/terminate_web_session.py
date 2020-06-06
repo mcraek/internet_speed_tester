@@ -14,7 +14,7 @@ from internet_speed_tester.misc_functions import output_progress
 from internet_speed_tester.registry_functions import set_subkey_value
 
 
-def terminate_web_session(args, log_name, option, registry, browser_instance):
+def end_web_session(args, log_name, option, registry, browser_instance):
 
     # Reset IE Zoom level back to its original setting
 

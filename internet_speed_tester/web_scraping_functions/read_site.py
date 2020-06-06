@@ -19,7 +19,7 @@ from selenium.webdriver.ie.options import Options
 # Built for project
 
 from internet_speed_tester.misc_functions import output_progress
-from internet_speed_tester.web_scraping_functions import terminate_web_session
+from internet_speed_tester.web_scraping_functions.terminate_web_session import end_web_session
 
 
 def check_html_element(args, log_name, element_id, browser_instance, registry):
@@ -33,12 +33,14 @@ def check_html_element(args, log_name, element_id, browser_instance, registry):
 
         browser_instance.find_element_by_id(element_id)
 
+        return True
+
     except:
 
         message = 'Unable to find HTML element. Perhaps site HTML coding has changed...'
         output_progress(args, message, log_name)
 
-        terminate_web_session(args, log_name, 'error', registry, browser_instance)
+        end_web_session(args, log_name, 'error', registry, browser_instance)
 
 
 def wait(args, log_name, browser_instance, registry):
@@ -73,7 +75,7 @@ def wait(args, log_name, browser_instance, registry):
 
         output_progress(args, message, log_name)
 
-        terminate_web_session(args, log_name, 'error', registry, browser_instance)
+        end_web_session(args, log_name, 'error', registry, browser_instance)
 
 
 def convert_speed(input_value):
@@ -170,9 +172,9 @@ def get_upload_speed(args, log_name, browser_instance, registry):
             + upload_link_text + '. Perhaps something has changed HTML-wise for this' + '\nError message: ' + str(e)
         output_progress(arguments_received, message, log_name)
 
-        terminate_web_session(arguments_received, log_name, 'error', ie_original_zoom, browser_instance)
+        end_web_session(arguments_received, log_name, 'error', ie_original_zoom, browser_instance)
 
-        terminate_web_session(args, log_name, 'error', registry, browser_instance)
+        end_web_session(args, log_name, 'error', registry, browser_instance)
 
     # Confirm upload speed has finished calculating before pulling value
 
@@ -205,7 +207,7 @@ def get_upload_speed(args, log_name, browser_instance, registry):
 
         message = '\nError message: ' + str(e)
 
-        terminate_web_session(args, log_name, 'error', registry, browser_instance)
+        end_web_session(args, log_name, 'error', registry, browser_instance)
 
     # Pull / return upload speed value converted to MB / s
 

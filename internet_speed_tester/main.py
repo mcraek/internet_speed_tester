@@ -17,8 +17,7 @@ from internet_speed_tester.misc_functions import set_logname
 from internet_speed_tester.misc_functions import output_progress
 
 # Tests connection to fast.com
-from internet_speed_tester.site_connection_functions \
-    import validate_site_connection
+from internet_speed_tester.site_connection_functions import validate_site_connection
 
 # Sets ZoomFactor HKCU reg key for Internet Explorer Zoom
 # to 100% (Selenium Requirement)
