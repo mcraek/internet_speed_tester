@@ -24,4 +24,4 @@ build/
 
 bin/
 
-running_flake8_tests.txt
+running_tests.txt

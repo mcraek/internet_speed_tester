@@ -39,6 +39,7 @@ def temp_dir(tmpdir):
 
 
 # Create fixture to start Selenium Test Instance
+# Referenced from: https://www.blazemeter.com/blog/improve-your-selenium-webdriver-tests-with-pytest
 
 @pytest.fixture(scope="session")
 def start_browser(request):
@@ -46,9 +47,8 @@ def start_browser(request):
     from selenium import webdriver
     from selenium.webdriver.ie.options import Options
     from internet_speed_tester.registry_functions.config_registry import config_registry
-    from internet_speed_tester.web_scraping_functions.terminate_web_session import terminate_web_session
-    from internet_speed_tester.web_scraping_functions.initialize_ie_session import start_ie_session
-
+    from internet_speed_tester.web_scraping_functions.terminate_web_session import end_web_session
+    
     # Define argugments to pass to config_registry and terminate_web_session
 
     args = {'log': False, 'verbose': False}
@@ -58,16 +58,24 @@ def start_browser(request):
 
     reg_info = config_registry(args, log)
 
-    # Start Selenium Session
+    # Define location, relative to tests directory to IE driver
 
-    with patch('internet_speed_tester.web_scraping_functions.initialize_ie_session.start_ie_session', 'ie_driver', '../../config/drivers/IEDriverServer.exe'):
+    driver_location = '../config/drivers/IEDriverServer.exe'
 
-        browser_instance, window_hidden = start_ie_session(args, log, reg_info.ie_original_zoom)
+    # Start Selenium Session, navigate to fast.com
 
-    return browser_instance
+    driver = webdriver.Ie(executable_path=driver_location)
+    driver.get('http://www.fast.com')
+    session = request.node
+    
+    for item in session.items:
+
+        cls = item.getparent(pytest.Class)
+        setattr(cls.obj, "driver", driver)
+        setattr(cls.obj, "reg_info", reg_info)
 
     # Once test is complete, restore IE ZoomFactor, Terminate IE Browser
 
     yield
 
-    terminate_web_session(args, log, 'graceful', reg_info, browser_instance)
+    end_web_session(args, log, 'graceful', reg_info, driver)

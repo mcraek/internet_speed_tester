@@ -110,7 +110,7 @@ def get_download_speed(args, log_name, browser_instance, registry):
 
     down_speed_converted = convert_speed(down_speed_value)
 
-    return down_speed_converted
+    return float(down_speed_converted)
 
 
 class element_has_css_class(object):
@@ -218,5 +218,5 @@ def get_upload_speed(args, log_name, browser_instance, registry):
 
     up_speed_converted = convert_speed(up_speed_value)
 
-    return up_speed_converted
+    return float(up_speed_converted)
 
