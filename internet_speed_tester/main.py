@@ -30,7 +30,7 @@ from internet_speed_tester.registry_functions import set_subkey_value
 from internet_speed_tester.web_scraping_functions import run_speed_test
 
 # Terminates IE Browser instance started with Selenium
-from internet_speed_tester.web_scraping_functions import terminate_web_session
+from internet_speed_tester.web_scraping_functions.terminate_web_session import end_web_session
 
 
 def internet_speed_tester():
@@ -103,7 +103,7 @@ def internet_speed_tester():
     message = '++++ Terminating IE Browser Instance ++++'
     output_progress(args, message, log_name)
 
-    terminate_web_session(args, log_name, 'graceful', registry, results.session)
+    end_web_session(args, log_name, 'graceful', registry, results.session)
 
 
 if __name__ == "__main__":

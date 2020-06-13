@@ -22,9 +22,17 @@ def end_web_session(args, log_name, option, registry, browser_instance):
 
         message = '+++ Restoring original IE ZoomFactor value'
         output_progress(args, message, log_name)
-        set_subkey_value(args, log_name, None,
-                         registry.ie_original_zoom,
-                         registry.root_key, 'restore')
+
+        try:
+
+            set_subkey_value(args, log_name, None,
+                            registry.ie_original_zoom,
+                            registry.root_key, 'restore')
+
+        except Exception as e:
+            
+            message = 'Unable to restore original IE Zoom level. Error message: ' + str(e)
+            output_progress(args, message, log_name)
 
     # Terminate IE Session
 
