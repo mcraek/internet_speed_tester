@@ -1,0 +1,1 @@
+from .main import internet_speed_tester
