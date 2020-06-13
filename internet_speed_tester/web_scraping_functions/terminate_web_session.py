@@ -29,11 +29,13 @@ def end_web_session(args, log_name, option, registry, browser_instance):
                             registry.ie_original_zoom,
                             registry.root_key, 'restore')
 
+            print('complete!')
+
         except Exception as e:
             
             message = 'Unable to restore original IE Zoom level. Error message: ' + str(e)
             output_progress(args, message, log_name)
-
+            
     # Terminate IE Session
 
     if option == 'graceful':
@@ -41,14 +43,27 @@ def end_web_session(args, log_name, option, registry, browser_instance):
         message = 'Program complete, terminating IE instance\n'
         output_progress(args, message, log_name)
 
-        browser_instance.close()
+        try:
+
+            browser_instance.close()
+
+        except Exception as e:
+
+            message = 'Error closing browser intance. Error message: \n' + str(e)
+            output_progress(args, message, log_name)
 
     elif option == 'error':
 
         message = ' Fatal error encountered. Terminating program.'
         output_progress(args, message, log_name)
 
-        browser_instance.close()
-        sys.exit()
+        try:
 
-   
+            browser_instance.close()
+                    
+        except Exception as e:
+
+            message = 'Error closing browser intance. Error message: \n' + str(e)
+            output_progress(args, message, log_name)
+
+        sys.exit()

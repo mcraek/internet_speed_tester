@@ -55,7 +55,7 @@ class TestTerminateWebSessionErrorAndRestore:
 
     def test_terminate_web_session_error(self):
 
-        # Test graceful option closes the browser
+        # Error option closes the browser
         # The with (SystemExit) is added to avoid PyTest considering
         # the sys.exit called by the function being an error
 

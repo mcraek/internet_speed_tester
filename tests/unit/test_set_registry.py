@@ -126,7 +126,7 @@ def test_create_subkey_2():
         assert subkey_created
 
 
-# Test create_subkey exists program in event of an error
+# Test create_subkey exits program in event of an error
 
 
 class TestCreateSubkeyError(unittest.TestCase):
