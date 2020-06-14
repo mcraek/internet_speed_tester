@@ -12,8 +12,7 @@ import os
 
 from internet_speed_tester.misc_functions import print_msg
 
-# === Define function for writing log messages to text
-# file in same directory as program ===
+# === Define function for writing log messages to text file in same directory as program ===
 
 
 def write_log(message, log_name):
@@ -36,8 +35,7 @@ def write_log(message, log_name):
 
 def output_progress(args, message, log_name):
 
-    # === Receive / handle args passed to this function from
-    # the commandline ===
+    # === Receive / handle args passed to this function from the commandline ===
 
     # If --debug specified, write console output to log file
 

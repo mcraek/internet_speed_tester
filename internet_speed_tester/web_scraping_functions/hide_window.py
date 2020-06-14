@@ -42,8 +42,7 @@ def hide_ie_window(args, log_name):
 
     except Exception as e:
 
-        message = 'Unable to hide IE window. Proceeeding with test. ' + \
-            'Error message: ' + str(e)
+        message = 'Unable to hide IE window. Proceeeding with test. Error message: ' + str(e)
         output_progress(args, message, log_name)
 
         return False

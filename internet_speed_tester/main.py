@@ -61,8 +61,7 @@ def internet_speed_tester():
         message = site + ' appears to be online and reachable'
         output_progress(args, message, log_name)
 
-        message = '==========\n\nPing results: \n' + ping_results \
-            + '\n\n=========='
+        message = '==========\n\nPing results: \n' + ping_results + '\n\n=========='
         output_progress(args, message, log_name)
 
     else:
@@ -70,8 +69,7 @@ def internet_speed_tester():
         message = 'Unable to connect to ' + site
         output_progress(args, message, log_name)
 
-        message = '==========\n\nPing results: ' + ping_results \
-            + '\n\n=========='
+        message = '==========\n\nPing results: ' + ping_results + '\n\n=========='
         output_progress(args, message, log_name)
 
         sys.exit()

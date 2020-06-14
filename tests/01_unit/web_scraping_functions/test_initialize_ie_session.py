@@ -24,7 +24,7 @@ def test_start_ie_session():
     with patch('internet_speed_tester.web_scraping_functions.initialize_ie_session.webdriver'):
 
         reg_info = Mock()
-        
+
         session = start_ie_session(args, log, reg_info)
         assert session is not None
 

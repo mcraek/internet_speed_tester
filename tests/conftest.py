@@ -5,12 +5,6 @@
 import os
 import pytest
 import shutil
-from unittest.mock import patch
-from unittest.mock import Mock
-
-# 3rd party
-
-import selenium
 
 # Create fixture which sets a temporary working directory for tests / files
 # generated during testing. After tests are complete, remove the temp directory
@@ -38,8 +32,7 @@ def temp_dir(tmpdir):
     shutil.rmtree(str(tempdir))
 
 
-
-def browser(request, navigate_to_site = False):
+def browser(request, navigate_to_site=False):
 
     # Define function for use in start_browser fixtures below
     # There are multiple fixtures created for starting the web browser
@@ -48,11 +41,10 @@ def browser(request, navigate_to_site = False):
     # A session scope is utilized as that provides access to .items
     # which allows calling the web browser via self.driver and the registry
     # via self.reg_info within a test
-    
+
     from selenium import webdriver
-    from selenium.webdriver.ie.options import Options
     from internet_speed_tester.registry_functions.config_registry import config_registry
-    
+
     # Define argugments to pass to config_registry and terminate_web_session
 
     args = {'log': False, 'verbose': False}
@@ -75,7 +67,7 @@ def browser(request, navigate_to_site = False):
         driver.get('http://www.fast.com')
 
     session = request.node
-    
+
     for item in session.items:
 
         cls = item.getparent(pytest.Class)

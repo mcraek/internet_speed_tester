@@ -18,10 +18,6 @@ from internet_speed_tester.misc_functions import output_progress
 ie_key_location = r'Software\\Microsoft\\Internet Explorer\\Zoom'
 zoom_key_name = 'ZoomFactor'
 
-# Initialize error message variable
-
-error = ''
-
 # Determine if HKCU can be connected to, store connection to return
 
 
@@ -86,12 +82,10 @@ def check_subkey(args, log_name, reg_connection, root_key_exists, root_key):
 
         try:
 
-            ie_zoom_key_access = winreg.OpenKey(winreg.HKEY_CURRENT_USER,
-                                                ie_key_location, 0,
-                                                winreg.KEY_ALL_ACCESS)
+            ie_zoom_key_access = winreg.OpenKey(winreg.HKEY_CURRENT_USER, ie_key_location, 0, winreg.KEY_ALL_ACCESS)
 
-            ie_original_zoom = (winreg.QueryValueEx(ie_zoom_key_access,
-                                                    zoom_key_name))[0]
+            ie_original_zoom = (winreg.QueryValueEx(ie_zoom_key_access, zoom_key_name))[0]
+            
             subkey_exists = True
             message = 'Subkey found.'
             output_progress(args, message, log_name)

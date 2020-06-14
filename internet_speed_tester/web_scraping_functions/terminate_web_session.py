@@ -25,11 +25,9 @@ def end_web_session(args, log_name, option, registry, browser_instance):
 
         try:
 
-            set_subkey_value(args, log_name, None,
-                            registry.ie_original_zoom,
-                            registry.root_key, 'restore')
+            set_subkey_value(args, log_name, None, registry.ie_original_zoom, registry.root_key, 'restore')
 
-            print('complete!')
+            print('Complete!')
 
         except Exception as e:
             

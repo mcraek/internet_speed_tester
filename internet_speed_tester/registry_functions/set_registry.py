@@ -25,16 +25,13 @@ def connect_key(args, log_name, root_key):
 
     try:
 
-        ie_zoom_key_access = winreg.OpenKey(
-            winreg.HKEY_CURRENT_USER, ie_key_location,
-            0, winreg.KEY_ALL_ACCESS)
+        ie_zoom_key_access = winreg.OpenKey(winreg.HKEY_CURRENT_USER, ie_key_location, 0, winreg.KEY_ALL_ACCESS)
 
         return ie_zoom_key_access
 
     except Exception as e:
 
-        message = 'Unable to connect to root key. ' \
-            + 'Terminating speed test.\nError message: ' + str(e)
+        message = 'Unable to connect to root key. Terminating speed test.\nError message: ' + str(e)
         output_progress(args, message, log_name)
 
         ie_zoom_key_access = None
@@ -59,8 +56,7 @@ def create_root_key(args, log_name, root_key_exists, reg_connection):
 
         except Exception as e:
 
-            message = 'Unable to create root key. ' \
-                + 'Terminating speed test.\nError message: ' + str(e)
+            message = 'Unable to create root key. Terminating speed test.\nError message: ' + str(e)
             output_progress(args, message, log_name)
             sys.exit()
 
@@ -80,15 +76,12 @@ def create_subkey(args, log_name, subkey_exists, root_key):
         try:
 
             ie_zoom_key_access = connect_key(args, log_name, root_key)
-            winreg.SetValueEx(
-                ie_zoom_key_access, zoom_key_name,
-                0, winreg.REG_DWORD, zoom_value)
+            winreg.SetValueEx(ie_zoom_key_access, zoom_key_name, 0, winreg.REG_DWORD, zoom_value)
             return True
 
         except Exception as e:
 
-            message = 'Unable to create subkey. Terminating speed test. ' \
-                + '\nError message: ' + str(e)
+            message = 'Unable to create subkey. Terminating speed test.\nError message: ' + str(e)
             output_progress(args, message, log_name)
             sys.exit()
 
@@ -101,8 +94,7 @@ def create_subkey(args, log_name, subkey_exists, root_key):
 # --- Set ZoomFactor Subkey Value ---
 
 
-def set_subkey_value(args, log_name, value,
-                     ie_original_zoom, root_key, option):
+def set_subkey_value(args, log_name, value, ie_original_zoom, root_key, option):
 
     if option == 'config' and ie_original_zoom != 100000:
 
@@ -115,15 +107,12 @@ def set_subkey_value(args, log_name, value,
         try:
 
             ie_zoom_key_access = connect_key(args, log_name, root_key)
-            winreg.SetValueEx(
-                ie_zoom_key_access, zoom_key_name,
-                0, winreg.REG_DWORD, zoom_value)
+            winreg.SetValueEx(ie_zoom_key_access, zoom_key_name, 0, winreg.REG_DWORD, zoom_value)
             return True
 
         except Exception as e:
 
-            message = 'Unable to create root key. ' \
-                + 'Terminating speed test.\nError message: ' + str(e)
+            message = 'Unable to create root key. Terminating speed test.\nError message: ' + str(e)
             output_progress(args, message, log_name)
             sys.exit()
 
@@ -134,15 +123,12 @@ def set_subkey_value(args, log_name, value,
         try:
 
             ie_zoom_key_access = connect_key(args, log_name, root_key)
-            winreg.SetValueEx(
-                ie_zoom_key_access, zoom_key_name,
-                0, winreg.REG_DWORD, ie_original_zoom)
+            winreg.SetValueEx(ie_zoom_key_access, zoom_key_name, 0, winreg.REG_DWORD, ie_original_zoom)
             return True
 
         except Exception as e:
 
-            message = 'Unable to restore original zoom value. ' \
-                + 'Error message: ' + str(e)
+            message = 'Unable to restore original zoom value. Error message: ' + str(e)
             output_progress(args, message, log_name)
             sys.exit()
 

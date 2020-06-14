@@ -63,7 +63,7 @@ def test_terminate_web_session_error():
         pytest.fail('Error running end_web_session with error option. Error message: ' + str(e))
 
 
-def test_terminate_web_session_error():
+def test_terminate_web_session_error2():
 
     # Validate error option closes browser
     # The with (SystemExit) is added to avoid PyTest considering
@@ -94,7 +94,6 @@ class TestTerminateWebSessionRestore(unittest.TestCase):
 
             end_web_session(args, log, 'error', registry_options, mocked_browser_instance)
 
-    
     @patch('internet_speed_tester.web_scraping_functions.terminate_web_session.set_subkey_value')
     def test_terminate_web_session_restore(self, mocked_set_subkey_value):
 

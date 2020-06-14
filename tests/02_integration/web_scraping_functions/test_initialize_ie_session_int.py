@@ -30,7 +30,7 @@ def test_start_ie_session():
 
     assert browser_instance is not None
     assert window_hidden
-    
+
     # Terminate IE instance
 
     browser_instance.close()

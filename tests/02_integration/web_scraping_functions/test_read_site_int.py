@@ -1,6 +1,4 @@
-from internet_speed_tester.web_scraping_functions.read_site import \
-    check_html_element, wait, convert_speed, get_download_speed, get_upload_speed
-
+from internet_speed_tester.web_scraping_functions.read_site import wait, get_download_speed, get_upload_speed
 import pytest
 from unittest.mock import Mock
 
@@ -15,7 +13,7 @@ log = "log"
 
 mocked_reg_connection = Mock()
 
-      
+
 @pytest.mark.usefixtures("start_browser")
 class TestReadSite:
 
@@ -26,7 +24,6 @@ class TestReadSite:
 
         site_loaded = wait(args, log, self.driver, mocked_reg_connection)
         assert site_loaded
-  
 
     def test_get_download_speed(self):
 
@@ -38,7 +35,6 @@ class TestReadSite:
 
         assert isinstance(download_speed, float)
 
-
     def test_get_upload_speed(self):
 
         # Validate get_upload_speed can pull value and convert it to MB/s
@@ -46,5 +42,3 @@ class TestReadSite:
         upload_speed = get_upload_speed(args, log, self.driver, mocked_reg_connection)
 
         assert isinstance(upload_speed, float)
-
-    

@@ -1,8 +1,6 @@
 from internet_speed_tester.web_scraping_functions.terminate_web_session import end_web_session
-
 import pytest
 from unittest.mock import Mock
-import time
 
 # Setup mocked registry connection and browser instance
 
@@ -17,6 +15,7 @@ log = "log"
 # Set registry option to test graceful / error option functionality
 # without calling registry key value restore
 
+
 class registry_options:
 
     subkey_set = False
@@ -29,7 +28,8 @@ class registry_restore:
     # Set this to None so as not to actually adjust the registry key
     # value during testing
     ie_original_zoom = None
-  
+
+
 @pytest.mark.usefixtures("start_browser_graceful")
 class TestTerminateWebSessionGraceful:
 
@@ -72,7 +72,6 @@ class TestTerminateWebSessionErrorAndRestore:
                 print('Error running end_web_session with error option. Error message: ' + str(e))
 
             assert session_terminated
-
 
     def test_terminate_web_session_restore_key(self):
 

@@ -2,11 +2,8 @@
 
 # --- Built for project ---
 
-from internet_speed_tester.registry_functions.query_registry \
-    import connect_registry, check_root_key, check_subkey
-
-from internet_speed_tester.registry_functions.set_registry \
-    import create_root_key, create_subkey, set_subkey_value
+from internet_speed_tester.registry_functions.query_registry import connect_registry, check_root_key, check_subkey
+from internet_speed_tester.registry_functions.set_registry import create_root_key, create_subkey, set_subkey_value
 
 # Define function for returning class of info back
 
@@ -42,9 +39,7 @@ def config_registry(args, log_name):
 
     # Find subkey if root key exists and return ZoomFactor value
 
-    subkey_exists, ie_original_zoom = \
-        check_subkey(args, log_name, reg_connection,
-                     root_key_exists, root_key)
+    subkey_exists, ie_original_zoom = check_subkey(args, log_name, reg_connection, root_key_exists, root_key)
 
     # === Set ZoomFactor Registry Value To 100% For Selenium ===
 
@@ -58,12 +53,9 @@ def config_registry(args, log_name):
 
     # If ZoomFactor subkey exists already, ensure this is set to 100%
 
-    subkey_set = set_subkey_value(args, log_name, 100000,
-                                  ie_original_zoom, root_key,
-                                  'config')
+    subkey_set = set_subkey_value(args, log_name, 100000, ie_original_zoom, root_key, 'config')
 
-    # Return class containing info for resetting
-    # ZoomFactor key to original value
+    # Return class containing info for resetting ZoomFactor key to original value
 
     reg_info = build_class(subkey_set, ie_original_zoom, root_key)
 

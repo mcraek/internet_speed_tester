@@ -1,9 +1,7 @@
-import pytest
 import unittest
 from unittest.mock import patch
 from unittest.mock import Mock
 from internet_speed_tester.web_scraping_functions.navigate_to_site import go_to_site
-from internet_speed_tester.registry_functions.config_registry import config_registry
 
 # Setup arguments to pass to function
 
@@ -31,7 +29,7 @@ class TestNavigateToSiteError(unittest.TestCase):
 
     @patch('internet_speed_tester.web_scraping_functions.navigate_to_site.end_web_session')
     def test_navigate_to_site_error(self, mocked_end_web_session):
-               
+
         reg_info = None
         browser_instance = None
 

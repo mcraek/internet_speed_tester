@@ -32,16 +32,14 @@ def start_ie_session(args, log_name, registry):
 
     try:
 
-        # Define driver location for Python to use
-        # (relative to direcotry of main.py)
+        # Define driver location for Python to use (relative to direcotry of main.py)
 
         driver_location = '../config/drivers/IEDriverServer.exe'
         ie_driver = get_path(driver_location)
         
-        # Define option specifying Selenium should not require IE
-        # to have Protected Mode enabled on all zones within
-        # Internet Options/Security, otherwise program errors
-        # out if run as an exe
+        # Define option specifying Selenium should not require IE to have Protected Mode enabled on all zones within
+        # Internet Options/Security, otherwise program errors out if run as an exe
+        
         ie_options = Options()
         ie_options.ignore_protected_mode_settings = True
 
