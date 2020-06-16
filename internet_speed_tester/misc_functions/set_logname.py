@@ -1,11 +1,13 @@
-# === Import required functions / libraries ===
+# === Import dependencies ===
+
+# Built-in
 
 from datetime import datetime
 
 
 def set_logname():
 
-    # === Form / return log filename
+    # Form / return log filename
 
     date = datetime.now()
     date = date.strftime("%d-%m-%Y-%H-%M")

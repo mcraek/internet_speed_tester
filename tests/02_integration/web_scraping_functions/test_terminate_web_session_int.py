@@ -1,6 +1,13 @@
-from internet_speed_tester.web_scraping_functions.terminate_web_session import end_web_session
+# === Import dependencies ===
+
+# Built-in
+
 import pytest
 from unittest.mock import Mock
+
+# Custom
+
+from internet_speed_tester.web_scraping_functions.terminate_web_session import end_web_session
 
 # Setup mocked registry connection and browser instance
 
@@ -12,22 +19,23 @@ mocked_browser_instance = Mock()
 args = {'log': False, 'verbose': False}
 log = "log"
 
-# Set registry option to test graceful / error option functionality
-# without calling registry key value restore
-
 
 class registry_options:
+
+    # Set registry option to test graceful / error option functionality
+    # without calling registry key value restore
 
     subkey_set = False
 
 
 class registry_restore:
 
-    subkey_set = True
+    # Set registry parameter to use restore option of end_web_session
+    # Set ie_original_zoom to None so as not to adjust value during test
 
-    # Set this to None so as not to actually adjust the registry key
-    # value during testing
+    subkey_set = True
     ie_original_zoom = None
+    root_key = Mock()
 
 
 @pytest.mark.usefixtures("start_browser_graceful")
@@ -35,7 +43,7 @@ class TestTerminateWebSessionGraceful:
 
     def test_terminate_web_session_graceful(self):
 
-        # Test graceful option closes the browser
+        # Validate graceful option closes the browser
 
         try:
 
@@ -54,6 +62,8 @@ class TestTerminateWebSessionGraceful:
 class TestTerminateWebSessionErrorAndRestore:
 
     def test_terminate_web_session_error(self):
+
+        # Validate error option completes
 
         # Error option closes the browser
         # The with (SystemExit) is added to avoid PyTest considering
@@ -74,6 +84,8 @@ class TestTerminateWebSessionErrorAndRestore:
             assert session_terminated
 
     def test_terminate_web_session_restore_key(self):
+
+        # Validate restore IE ZoomFactor works
 
         # Test terminate_web_session is able to restore original registry setting for IE ZoomFactor
         # Added this to the same class as the error test as this will cause the other tests

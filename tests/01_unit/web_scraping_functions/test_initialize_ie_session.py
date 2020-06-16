@@ -1,15 +1,14 @@
-# === Import required functions / libraries ===
+# === Import dependencies ===
 
-# --- Built-in ---
+# Built-in
 
 import unittest
 from unittest.mock import patch
 from unittest.mock import Mock
 
-# --- Built for project ---
+# Custom
 
-from internet_speed_tester.web_scraping_functions.initialize_ie_session \
-    import start_ie_session
+from internet_speed_tester.web_scraping_functions.initialize_ie_session import start_ie_session
 
 # Setup arguments to pass to function
 
@@ -17,9 +16,9 @@ args = {'log': False, 'verbose': False}
 log = "log"
 
 
-# Validate IE session is returned by start_ie_session
-
 def test_start_ie_session():
+
+    # Validate IE session is returned by start_ie_session
 
     with patch('internet_speed_tester.web_scraping_functions.initialize_ie_session.webdriver'):
 
@@ -29,9 +28,9 @@ def test_start_ie_session():
         assert session is not None
 
 
-# Validate start_ie_session terminates program in event of error
-
 class TestStartIESessionError(unittest.TestCase):
+
+    # Validate start_ie_session terminates program in event of error
 
     def test_start_ie_session_error(self):
 

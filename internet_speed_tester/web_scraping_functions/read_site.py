@@ -1,25 +1,23 @@
-# ============================== Import Dependencies ============================== #
+# === Import dependencies ===
 
-# Built-in functions
+# --- Built-in ---
 
 import sys
 from decimal import Decimal
 import time
 
-# 3rd party functions installed to project Python executable
+# Custom
 
-from pynput.keyboard import Key, Controller
+from internet_speed_tester.misc_functions import output_progress
+from internet_speed_tester.web_scraping_functions.terminate_web_session import end_web_session
+
+# 3rd party
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By      
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.ie.options import Options
-
-# Built for project
-
-from internet_speed_tester.misc_functions import output_progress
-from internet_speed_tester.web_scraping_functions.terminate_web_session import end_web_session
 
 
 def check_html_element(args, log_name, element_id, browser_instance, registry):
@@ -45,8 +43,7 @@ def check_html_element(args, log_name, element_id, browser_instance, registry):
 
 def wait(args, log_name, browser_instance, registry):
 
-    # Waits for 'show-more-details-link' HTML element to confirm page is loaded
-    # Times out at 120 seconds
+    # Waits for 'show-more-details-link' HTML element to confirm page is loaded. Times out at 120 seconds
 
     site_loaded_element_id = 'show-more-details-link'
 
@@ -56,6 +53,8 @@ def wait(args, log_name, browser_instance, registry):
     output_progress(args, message, log_name)
 
     check_html_element(args, log_name, site_loaded_element_id, browser_instance, registry)
+
+    # Once show-more-details-link becomes clickable, the page has finished loading. Return an error after timeout
 
     try:
 
@@ -82,7 +81,7 @@ def wait(args, log_name, browser_instance, registry):
 
 def convert_speed(input_value):
 
-    # Converts mbps to MB/s
+    # Converts mbps values pulled from site to MB/s
 
     speed_converted = Decimal(input_value) / 8
     speed_converted = round(speed_converted, 2)
@@ -92,7 +91,9 @@ def convert_speed(input_value):
 
 def get_download_speed(args, log_name, browser_instance, registry):
 
-    # When navigating to site, download speed is automatically calculated
+    # Pulls mbps download speed
+
+    # When site loads, download speed is automatically calculated
     # Check HTML element used for obtaining speed still exists, then pull value
 
     message = '++++ Obtaining Download Speed ++++'
@@ -106,7 +107,7 @@ def get_download_speed(args, log_name, browser_instance, registry):
     message = 'Download speed found!'
     output_progress(args, message, log_name)
 
-    # Convert value to MB / s
+    # Convert value to MB / s, two decimal places
 
     down_speed_converted = convert_speed(down_speed_value)
 
@@ -131,7 +132,7 @@ class element_has_css_class(object):
 
     def __call__(self, browser_instance):
 
-        element = browser_instance.find_element(*self.locator)   # Finding the referenced element
+        element = browser_instance.find_element(*self.locator)
 
         if self.css_class in element.get_attribute("class"):
 
@@ -196,6 +197,8 @@ def get_upload_speed(args, log_name, browser_instance, registry):
         css = 'extra-measurement-value-container succeeded'
         wait = WebDriverWait(browser_instance, 120)
 
+        # Use class defined above to wait until CSS class is applied to HTML element
+
         element = wait.until(element_has_css_class((By.ID, upload_html_id), css))
 
     except Exception as e:
@@ -209,13 +212,12 @@ def get_upload_speed(args, log_name, browser_instance, registry):
 
         end_web_session(args, log_name, 'error', registry, browser_instance)
 
-    # Pull / return upload speed value converted to MB / s
+    # Pull / return upload speed value converted to MB / s, two decimal places
 
     message = 'Upload speed test complete. Pulling value...'
     output_progress(args, message, log_name)
 
     up_speed_value = browser_instance.find_element_by_id(upload_html_id).text
-
     up_speed_converted = convert_speed(up_speed_value)
 
     return float(up_speed_converted)

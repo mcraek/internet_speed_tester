@@ -1,16 +1,18 @@
-# === Import required functions / libraries ===
+# === Import dependencies ===
 
-# --- Built-in ---
+# Built-in
 
-# Allows terminating program in event of error
 import sys
 
-# --- Built for project ---
+# Custom
 
 from internet_speed_tester.misc_functions import output_progress
 from internet_speed_tester.web_scraping_functions.terminate_web_session import end_web_session
 
+
 def go_to_site(args, log_name, registry, browser_instance, site):
+
+    # Navigate browser instance to site
 
     message = '++++ Navigating to ' + site + '... ++++'
     output_progress(args, message, log_name)

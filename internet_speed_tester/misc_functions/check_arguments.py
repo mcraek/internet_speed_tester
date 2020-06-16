@@ -1,11 +1,13 @@
-# === Import required functions / libraries ===
+# === Import dependencies ===
+
+# Built-in
 
 import argparse
 
 
 def check_arguments(argv=None):
 
-    # === Define valid arguments ===
+    # Define valid arguments
 
     parser = argparse.ArgumentParser()
 
@@ -25,7 +27,7 @@ def check_arguments(argv=None):
     parser.add_argument('-v', '--verbose', help='increases verbosity of' +
                         ' console output', action='store_true')
 
-    # === Store / return arguments ===
+    # Store / return arguments passed from CLI
 
     parsed_args = parser.parse_args()
 

@@ -1,4 +1,6 @@
-# Import dependencies
+# === Import dependencies ===
+
+# Custom
 
 from internet_speed_tester.web_scraping_functions.initialize_ie_session import start_ie_session
 from internet_speed_tester.web_scraping_functions.navigate_to_site import go_to_site
@@ -6,10 +8,10 @@ from internet_speed_tester.web_scraping_functions.read_site import wait
 from internet_speed_tester.web_scraping_functions.read_site import get_download_speed
 from internet_speed_tester.web_scraping_functions.read_site import get_upload_speed
 
-# Define function for returning class of info back
-
 
 def build_class(a, b, c):
+
+    # Returns browser instance, and speed test results
 
     class SpeedTestResults:
 
@@ -25,6 +27,8 @@ def build_class(a, b, c):
 
 
 def run_speed_test(args, log_name, registry):
+
+    # Initializes IE browser, navigates to fast.com, runs speed test and returns results
 
     # Start IE Browser
 

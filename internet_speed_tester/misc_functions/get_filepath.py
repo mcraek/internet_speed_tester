@@ -1,9 +1,8 @@
-# Import dependencies
+# === Import dependencies ===
 
-# Needed for referencing relative paths to files
+# Built-in
+
 import os
-
-# Used for referencing sys.MEIPASS (Temp directory PyInstaller creates for executable version of program in Production)
 import sys
 
 

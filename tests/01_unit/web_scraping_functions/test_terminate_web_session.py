@@ -1,16 +1,14 @@
-# === Import required functions / libraries ===
+# === Import dependencies ===
 
-# --- Built-in ---
+# Built-in
 
 import pytest
 import unittest
-from unittest.mock import patch
-from unittest.mock import Mock
+from unittest.mock import patch, Mock
 
-# --- Built for project ---
+# Custom
 
 from internet_speed_tester.web_scraping_functions.terminate_web_session import end_web_session
-
 
 # Set up mocked browser instance to pass to function
 
@@ -21,16 +19,18 @@ mocked_browser_instance = Mock()
 args = {'log': False, 'verbose': False}
 log = "log"
 
-# Set registry option to test graceful / error option functionality
-# without calling registry key value restore
-
 
 class registry_options:
+
+    # Set registry parameter to test graceful / error option functionality
+    # of end_web_session without calling registry key value restore
 
     subkey_set = False
 
 
 class registry_restore:
+
+    # Set registry parameter to use restore option of end_web_session 
 
     subkey_set = True
     ie_original_zoom = None
@@ -39,7 +39,7 @@ class registry_restore:
 
 def test_terminate_web_session_graceful():
 
-    # Test graceful option is able to close browser instance w/o raising exception
+    # Validate graceful option is able to close browser instance w/o raising exception
 
     try:
 
@@ -52,21 +52,7 @@ def test_terminate_web_session_graceful():
 
 def test_terminate_web_session_error():
 
-    # Test error option is able to close browser instance w/o raising exception
-
-    try:
-
-        end_web_session(args, log, 'error', registry_options, mocked_browser_instance)
-
-    except Exception as e:
-
-        pytest.fail('Error running end_web_session with error option. Error message: ' + str(e))
-
-
-def test_terminate_web_session_error2():
-
-    # Validate error option closes browser
-    # The with (SystemExit) is added to avoid PyTest considering
+    # Validate error option closes browser the with (SystemExit) is added to avoid PyTest considering
     # the sys.exit called by the function being an error
 
     with pytest.raises(SystemExit):
@@ -88,7 +74,7 @@ class TestTerminateWebSessionRestore(unittest.TestCase):
 
     def test_terminate_web_session_error_exit(self):
 
-        # Test error option exits program
+        # Validate error option calls end_web_session
 
         with self.assertRaises(SystemExit):
 
@@ -97,7 +83,7 @@ class TestTerminateWebSessionRestore(unittest.TestCase):
     @patch('internet_speed_tester.web_scraping_functions.terminate_web_session.set_subkey_value')
     def test_terminate_web_session_restore(self, mocked_set_subkey_value):
 
-        # Validate set_subkey_value called when subkey_set for registry is set to True
+        # Validate set_subkey_value is called when subkey_set for registry is set to True
 
         end_web_session(args, log, 'graceful', registry_restore, mocked_browser_instance)
         self.assertTrue(mocked_set_subkey_value.called)

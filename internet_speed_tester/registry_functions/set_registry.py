@@ -1,14 +1,11 @@
-# === Import required functions / libraries ===
+# === Import dependencies ===
 
-# --- Built-in ---
+# Built-in
 
-# Allows modifying HKCU reg key for setting IE zoom level
 import winreg
-
-# Used for terminating speed test when Exception raised
 import sys
 
-# --- Built for project ---
+# Custom
 
 from internet_speed_tester.misc_functions import output_progress
 
@@ -18,10 +15,10 @@ ie_key_location = r'Software\\Microsoft\\Internet Explorer\\Zoom'
 zoom_key_name = 'ZoomFactor'
 zoom_value = 100000
 
-# Define function for connecting to root key for RW access to values
-
 
 def connect_key(args, log_name, root_key):
+
+    # Connects to root key for RW access to values
 
     try:
 
@@ -39,10 +36,9 @@ def connect_key(args, log_name, root_key):
         sys.exit()
 
 
-# --- Create root key if it doesn't exist ---
-
-
 def create_root_key(args, log_name, root_key_exists, reg_connection):
+
+    # Creates root key if it doesn't already exist
 
     if not root_key_exists:
 
@@ -66,10 +62,10 @@ def create_root_key(args, log_name, root_key_exists, reg_connection):
         output_progress(args, message, log_name)
         return False
 
-# --- Create ZoomFactor subkey if it doesn't exist ---
-
 
 def create_subkey(args, log_name, subkey_exists, root_key):
+
+    # Creates ZoomFactor subkey if it doesn't exist
 
     if not subkey_exists:
 
@@ -91,10 +87,12 @@ def create_subkey(args, log_name, subkey_exists, root_key):
         output_progress(args, message, log_name)
         return False
 
-# --- Set ZoomFactor Subkey Value ---
-
 
 def set_subkey_value(args, log_name, value, ie_original_zoom, root_key, option):
+
+    # Sets ZoomFactor subkey value
+
+    # Config option sets IE ZoomFactor to 100%
 
     if option == 'config' and ie_original_zoom != 100000:
 
@@ -115,6 +113,8 @@ def set_subkey_value(args, log_name, value, ie_original_zoom, root_key, option):
             message = 'Unable to create root key. Terminating speed test.\nError message: ' + str(e)
             output_progress(args, message, log_name)
             sys.exit()
+
+    # Restore option restores the original IE ZoomFactor value pulled from system
 
     elif option == 'restore':
 

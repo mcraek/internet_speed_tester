@@ -1,8 +1,17 @@
+# === Import dependencies ===
+
+# Built-in
+
 import unittest
-from unittest.mock import patch
-from unittest.mock import Mock
+from unittest.mock import patch, Mock
+
+# Custom
+
 from internet_speed_tester.web_scraping_functions.read_site import check_html_element, wait, \
     convert_speed, get_download_speed, get_upload_speed
+
+# 3rd party
+
 from selenium.common.exceptions import TimeoutException
 
 # Setup mocked registry connection & browser instance

@@ -1,27 +1,22 @@
-# Creates / returns class containing info on ZoomFactor registry key
+# === Dependencies ===
 
-# === Import required functions / libraries ===
+# Built-in
 
-# --- Built-in ---
-
-# Allows modifying HKCU reg key for setting IE zoom level
 import winreg
 
-# --- Built for project ---
+# Custom
 
 from internet_speed_tester.misc_functions import output_progress
-
-# === Begin function ===
 
 # Define reg key location & name
 
 ie_key_location = r'Software\\Microsoft\\Internet Explorer\\Zoom'
 zoom_key_name = 'ZoomFactor'
 
-# Determine if HKCU can be connected to, store connection to return
-
 
 def connect_registry(args, log_name):
+
+    # Attempt to connect to HKCU, store connection to return if successful
 
     message = 'Attempting connection to HKCU hive'
     output_progress(args, message, log_name)
@@ -40,15 +35,13 @@ def connect_registry(args, log_name):
 
     return reg_connection
 
-# Check if root key exists in registry
-
 
 def check_root_key(args, log_name, reg_connection):
 
+    # Check if root key exists in registry, if so connect to it and return connection
+
     message = 'Checking for HKCU:' + ie_key_location + ' registry key'
     output_progress(args, message, log_name)
-
-    # Check if root key exists
 
     try:
 
@@ -68,10 +61,10 @@ def check_root_key(args, log_name, reg_connection):
 
     return root_key_exists, root_key
 
-# Find subkey if root key exists and return ZoomFactor value
-
 
 def check_subkey(args, log_name, reg_connection, root_key_exists, root_key):
+
+    # Find subkey if root key exists and return ZoomFactor value
 
     if not root_key_exists:
 

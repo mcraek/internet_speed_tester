@@ -1,11 +1,10 @@
-# === Import required functions / libraries ===
+# === Import dependencies ===
 
-# --- Built-in ---
+# Built-in
 
-# Allows calling ping utility
 import subprocess
 
-# --- Built for project ---
+# Custom
 
 from internet_speed_tester.misc_functions import output_progress
 

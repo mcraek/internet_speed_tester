@@ -4,19 +4,21 @@
 
 import sys
 
-# 3rd party
-
-from selenium import webdriver
-
-# Functions built as part of this project
+# Custom
 
 from internet_speed_tester.misc_functions import output_progress
 from internet_speed_tester.registry_functions import set_subkey_value
 
+# 3rd party
+
+from selenium import webdriver
+
 
 def end_web_session(args, log_name, option, registry, browser_instance):
 
-    # Reset IE Zoom level back to its original setting
+    # Closes IE browser, restores original IE ZoomFactor value
+
+    # Reset IE Zoom level back to its original setting if it was modified
 
     if registry.subkey_set:
 

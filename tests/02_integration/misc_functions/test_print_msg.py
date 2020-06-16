@@ -1,20 +1,18 @@
-# === Import required functions / libraries ===
+# === Import dependencies ===
 
-# --- Built-in ---
+# Built-in
 
 import contextlib
 import io
 
-# --- Built for project ---
+# Custom
 
 from internet_speed_tester.misc_functions import print_msg
 
 
-# Provide test message to print function, validate
-# it prints the custom message when called
-
-
 def test_print_msg():
+
+    # Validate output_progress displays text to console
 
     test_msg = 'Hello world!'
 

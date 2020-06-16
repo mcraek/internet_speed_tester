@@ -1,18 +1,12 @@
-# === Import required functions / libraries ===
+# === Import dependencies ===
 
-# --- Built-in ---
-
-# Writes output to text file if --log specified
+# Built-in
 
 import os
 
-# --- Functions built for project ---
-
-# Print messages to console with auto time.sleep
+# Custom
 
 from internet_speed_tester.misc_functions import print_msg
-
-# === Define function for writing log messages to text file in same directory as program ===
 
 
 def write_log(message, log_name):
@@ -35,7 +29,7 @@ def write_log(message, log_name):
 
 def output_progress(args, message, log_name):
 
-    # === Receive / handle args passed to this function from the commandline ===
+    # Receive / handle args passed to this function from the commandline
 
     # If --debug specified, write console output to log file
 

@@ -1,21 +1,19 @@
-# Import dependencies
+# === Import dependencies ===
 
-# 3rd party modules installed as part of this project
-
-# Used for hiding console for --silent option
-# (installed with pip install pywin32)
-import win32gui
-
-# --- Built for project ---
+# Custom
 
 from internet_speed_tester.misc_functions import output_progress
 
+# 3rd party
 
-window_name = 'WebDriver - Internet Explorer'
+import win32gui  # (installed with pip install pywin32)
 
 
 def window_enum_handler(hwnd, all_windows):
 
+    # Enumerate / return all windows matching window_name
+
+    window_name = 'WebDriver - Internet Explorer'
     window_text = win32gui.GetWindowText(hwnd)
     class_name = win32gui.GetClassName(hwnd)
 
@@ -25,6 +23,8 @@ def window_enum_handler(hwnd, all_windows):
 
 
 def hide_ie_window(args, log_name):
+
+    # Hide Internet Explorer window
 
     try:
         

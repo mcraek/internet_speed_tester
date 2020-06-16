@@ -1,4 +1,4 @@
-# === Import required functions / libraries ===
+# === Import Dependencies ===
 
 # Built-in
 

@@ -1,3 +1,7 @@
+# === Import dependencies ===
+
+# Custom
+
 from internet_speed_tester.web_scraping_functions.initialize_ie_session import start_ie_session
 from internet_speed_tester.web_scraping_functions.navigate_to_site import go_to_site
 from internet_speed_tester.registry_functions.config_registry import config_registry
@@ -11,8 +15,6 @@ log = "log"
 # Set ZoomFactor to 100% (Selenium Requirement)
 
 reg_info = config_registry(args, log)
-
-# Get browser instance
 
 
 def test_navigate_to_site():

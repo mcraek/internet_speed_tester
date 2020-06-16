@@ -1,6 +1,13 @@
-from internet_speed_tester.web_scraping_functions.read_site import wait, get_download_speed, get_upload_speed
+# === Import dependencies ===
+
+# Built-in
+
 import pytest
 from unittest.mock import Mock
+
+# Custom
+
+from internet_speed_tester.web_scraping_functions.read_site import wait, get_download_speed, get_upload_speed
 
 # Setup arguments to pass to function
 

@@ -1,6 +1,12 @@
+# === Import dependencies ===
+
+# Built-in
+
 import unittest
-from unittest.mock import patch
-from unittest.mock import Mock
+from unittest.mock import patch, Mock
+
+# Custom
+
 from internet_speed_tester.web_scraping_functions.navigate_to_site import go_to_site
 
 # Setup arguments to pass to function
@@ -25,7 +31,7 @@ class TestNavigateToSiteError(unittest.TestCase):
 
     # Validate navigate_to_site calls end_web_session when site is not reachable
     # end_web_session is patched so it doesn't raise an exception when called, all
-    # we care about here is that it is called. The function itself is tested elsewhere
+    # we care about here is that it is called. end_web_session itself is tested elsewhere
 
     @patch('internet_speed_tester.web_scraping_functions.navigate_to_site.end_web_session')
     def test_navigate_to_site_error(self, mocked_end_web_session):

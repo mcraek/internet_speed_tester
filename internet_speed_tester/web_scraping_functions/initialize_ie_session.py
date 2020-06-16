@@ -1,52 +1,48 @@
-# === Import required functions / libraries ===
+# === Import dependencies ===
 
-# --- Built-in ---
+# Built-in
 
-# Allows terminating program in event of error
 import sys
 
-# --- Built for project ---
+# Custom
 
 from internet_speed_tester.misc_functions import output_progress
 from internet_speed_tester.misc_functions.get_filepath import get_path
 from internet_speed_tester.web_scraping_functions.hide_window import hide_ie_window
 from internet_speed_tester.web_scraping_functions.terminate_web_session import end_web_session
 
-# 3rd party functions installed to project Python executable
+# 3rd party
 
-# Allows controlling web browser, same with next two below this
 from selenium import webdriver
-
-# Allows ignoring IE Protected Zone settings
 from selenium.webdriver.ie.options import Options
 
 
-# Open IE window & hide it, return browser instance
-# back to pass to other functions
-
-
 def start_ie_session(args, log_name, registry):
+
+    # Open IE window & hide it, return browser instance back to pass to other functions
 
     message = 'Establishing Internet Explorer session...'
     output_progress(args, message, log_name)
 
     try:
 
-        # Define driver location for Python to use (relative to direcotry of main.py)
+        # Define driver location for Python to use (relative to directory of main.py)
 
         driver_location = '../config/drivers/IEDriverServer.exe'
         ie_driver = get_path(driver_location)
         
         # Define option specifying Selenium should not require IE to have Protected Mode enabled on all zones within
-        # Internet Options/Security, otherwise program errors out if run as an exe
+        # Internet Options/Security, otherwise will crash if run as an exe and this is not set
         
         ie_options = Options()
         ie_options.ignore_protected_mode_settings = True
 
         # Initializes browser
+        
         ie = webdriver.Ie(executable_path=ie_driver, options=ie_options)
 
-        # Hide IE Window
+        # Hide IE Window, return browser instance
+        
         window_hidden = hide_ie_window(args, log_name)
 
         message = 'IE session started'
@@ -65,7 +61,6 @@ def start_ie_session(args, log_name, registry):
 
         end_web_session(args, log_name, 'error', registry, browser_instance)
         
-
 
 if __name__ == '__main__':
 
