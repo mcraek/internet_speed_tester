@@ -28,7 +28,7 @@ def internet_speed_tester():
     message = '---- Internet Speed Test Checker v. 0.5 ----'
     output_progress(args, message, log_name)
 
-    # Test connection to the fast.com, terminate if unsuccessful
+    # Test connection to fast.com, terminate if unsuccessful
 
     site = 'fast.com'
     site_up, ping_results = validate_site_connection(args, site, log_name)
@@ -73,7 +73,7 @@ def internet_speed_tester():
 
     output_progress(args, message, log_name)
 
-    # Terminate IE browser instance / restore IE origianl ZoomFactor
+    # Terminate IE browser instance / restore IE original ZoomFactor
 
     message = '++++ Terminating IE Browser Instance ++++'
     output_progress(args, message, log_name)
