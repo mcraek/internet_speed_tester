@@ -32,14 +32,16 @@ def start_ie_session(args, log_name, registry):
         ie_driver = get_path(driver_location)
         
         # Define option specifying Selenium should not require IE to have Protected Mode enabled on all zones within
-        # Internet Options/Security, otherwise will crash if run as an exe and this is not set
-        
-        ie_options = Options()
-        ie_options.ignore_protected_mode_settings = True
+        # Internet Options/Security, browser otherwise will not start if all these are not set to be the same
+        # Importing Options and running dir(Options()) shows the other options that can be used.
+        # Note: There is also an ignore_zoom_level option as well that is not used for this.
+
+        options = Options()
+        options.ignore_protected_mode_settings = True    
 
         # Initializes browser
         
-        ie = webdriver.Ie(executable_path=ie_driver, options=ie_options)
+        ie = webdriver.Ie(executable_path=ie_driver, ie_options=options)
 
         # Hide IE Window, return browser instance
         

@@ -45,6 +45,7 @@ def browser(request, navigate_to_site=False):
 
     from selenium import webdriver
     from internet_speed_tester.registry_functions.config_registry import config_registry
+    from selenium.webdriver.ie.options import Options
 
     # Define argugments to pass to config_registry and terminate_web_session
 
@@ -61,7 +62,10 @@ def browser(request, navigate_to_site=False):
 
     # Start Selenium Session, navigate to fast.com if testing site functionality
 
-    driver = webdriver.Ie(executable_path=driver_location)
+    options = Options()
+    options.ignore_protected_mode_settings = True    
+
+    driver = webdriver.Ie(executable_path=driver_location, ie_options=options)
 
     if navigate_to_site:
 
