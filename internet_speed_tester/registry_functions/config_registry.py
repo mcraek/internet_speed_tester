@@ -2,8 +2,8 @@
 
 # Custom
 
-from internet_speed_tester.registry_functions.query_registry import connect_registry, check_root_key, check_subkey
-from internet_speed_tester.registry_functions.set_registry import create_root_key, create_subkey, set_subkey_value
+from internet_speed_tester.registry_functions.set_registry2 import connect_registry, check_root_key, check_subkey,\
+    set_subkey
 
 
 def build_class(a, b, c):
@@ -29,35 +29,30 @@ def config_registry(args, log_name):
 
     # === Connect to registry / store info on IE ZoomFactor key ===
 
-    # Connect to registry
+    # Connect to HKCU registry hive
 
-    reg_connection = connect_registry(args, log_name)
-
-    # Find root key
-
-    root_key_exists, root_key = check_root_key(args, log_name, reg_connection)
-
-    # Find subkey if root key exists and store existing ZoomFactor value
-
-    subkey_exists, ie_original_zoom = check_subkey(args, log_name, reg_connection, root_key_exists, root_key)
-
-    # === Set ZoomFactor Registry Value To 100% For Selenium ===
+    hive = 'HKEY_CURRENT_USER'
+    reg_connection = connect_registry(args, log_name, hive)
 
     # Create root key if it doesn't exist
 
-    create_root_key(args, log_name, root_key_exists, reg_connection)
+    root_key_path = r'Software\\Microsoft\\Internet Explorer\\Zoom'
+    root_key_exists, root_key = check_root_key(args, log_name, reg_connection, root_key_path)
 
-    # Create ZoomFactor subkey if it doesn't exist
+    # Find subkey if root key exists and store existing ZoomFactor value, store access to subkey to restore original value
 
-    create_subkey(args, log_name, subkey_exists, root_key)
+    subkey_name = 'ZoomFactor'
+    subkey_exists, ie_original_zoom, zoom_key_access = check_subkey(args, log_name, hive, root_key_exists, root_key_path, subkey_name)
 
-    # If ZoomFactor subkey exists already, ensure this is set to 100%
+    # Set ZoomFactor Registry Value To 100% For Selenium If Not Already Set To This
 
-    subkey_set = set_subkey_value(args, log_name, 100000, ie_original_zoom, root_key, 'config')
-
+    expected_value = 100000
+    reg_type = 'REG_DWORD'
+    subkey_changed = set_subkey(args, log_name, subkey_name, zoom_key_access, subkey_exists, ie_original_zoom, expected_value, reg_type)
+    
     # Return class with reg connection / and info
 
-    reg_info = build_class(subkey_set, ie_original_zoom, root_key)
+    reg_info = build_class(subkey_changed, ie_original_zoom, root_key)
 
     return reg_info
 

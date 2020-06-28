@@ -1,0 +1,19 @@
+- Pass it a root key location
+- If the root key location doesn't exist create it
+- Also pass subkey and expected value
+- If the subkey doesn't exist it's created
+- If the subkey doens't have the expected value, it's changed
+- Information returned:
+
+Original value
+Did the root key exist
+Did the subkey exist
+The original subkey value
+
+- Subkey will linger, that's ok
+- Above info is used to restore original setting if there
+was an original setting
+
+- Goal is to be able to create / set IE Zoom Factor value,
+and IE Protected zone settings with a single function
+and return this info back to restore original settings after
