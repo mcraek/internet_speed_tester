@@ -51,7 +51,7 @@ def internet_speed_tester():
 
         sys.exit()
 
-    # Set IE Zoom Level to 100% (Selenium requirement)
+    # Ensure Internet Explorer has right registry settings configured to work with Selenium
 
     messages = ['+++ Performing Internet Explorer Setup +++', 'The following settings will be checked / configured: ', 
                 'Set IE zoom level to 100%.', 'Enable all protected zones', 'Disable first run setup wizard']
@@ -60,14 +60,16 @@ def internet_speed_tester():
 
         output_progress(args, message, log_name)
 
-    registry = config_registry(args, log_name)
+    zoom_info, protected_zone_info, initialization_wizard_info = config_registry(args, log_name)
+
+    # Can access the above through getattr; e.g., zoom_set = getattr(zoom_info, 'subkey_set')
 
     # Start Selenium session to fast.com, pull return speed values
 
     message = '++++ Starting speed test ++++'
     output_progress(args, message, log_name)
 
-    results = run_speed_test(args, log_name, registry)
+    results = run_speed_test(args, log_name, zoom_info)
 
     # Output speed test results
 
