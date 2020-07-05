@@ -110,26 +110,20 @@ def check_subkey(args, log_name, hive, root_key_exists, root_key_path, subkey_na
 
             message = 'Searching root key for ' + str(subkey_name) + ' subkey'
             output_progress(args, message, log_name)
+            
             original_key_value = (winreg.QueryValueEx(subkey_access, subkey_name))[0]
 
             subkey_exists = True
+            message = 'Subkey found. Original value = ' + str(original_key_value)
 
         except Exception as e:
 
             message = 'Subkey not found. Results of check: ' + str(e)
-            output_progress(args, message, log_name)
+
             subkey_exists = False
             original_key_value = None
 
     # Output and return results
-
-    if subkey_exists:
-
-        message = 'Subkey found. Original value = ' + str(original_key_value)
-
-    else:
-
-        message = 'Subkey not found.'
 
     output_progress(args, message, log_name)
 
@@ -152,7 +146,7 @@ def set_subkey(args, log_name, subkey_name, subkey_access, subkey_exists, origin
 
     if original_key_value != expected_value:
 
-        message = subkey_name + 'value ' + str(original_key_value) + ' does not match expected value ' + str(expected_value)
+        message = 'Subkey ' + str(subkey_name) + ' existing value: ' + str(original_key_value) + ' does not match expected value: ' + str(expected_value)
         message += '. Setting value'
         change_reqd = True
 
