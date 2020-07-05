@@ -17,11 +17,23 @@ class RegSetting():
         self.root_key = ''
         self.subkey_exists = ''
 
-# Initialize classes for returning information on and connections to registry keys that will be checked / configured
+# Initialize classes for storing information and connections to registry keys that will be checked / configured
 
 zoom_info = RegSetting()
 protected_zone_info = RegSetting()
 initialization_wizard_info = RegSetting()
+
+class RegistryConfig():
+
+    def __init__self():
+
+        self.zoom_info = []
+        self.original_value = []
+        self.initialization_wizard_info = []
+
+# Initialize class for storing all other classes of registry connections / info. This is returned at the end of config_registry
+
+registry_config = RegistryConfig()
 
 
 def config_registry(args, log_name):
@@ -149,9 +161,15 @@ def config_registry(args, log_name):
     setattr(initialization_wizard_info, 'root_key', wizard_root_key)
     setattr(initialization_wizard_info, 'subkey_exists', wizard_subkey_exists)
 
-    # Return classes with reg connections / info
+    # Build class containing all registry connections / info
 
-    return zoom_info, protected_zone_info, initialization_wizard_info
+    setattr(registry_config, 'zoom_info', zoom_info)
+    setattr(registry_config, 'protected_zone_info', protected_zone_info)
+    setattr(registry_config, 'initialization_wizard_info', initialization_wizard_info)
+
+    # Return class with reg connections / info
+
+    return registry_config
 
 
 if __name__ == '__main__':

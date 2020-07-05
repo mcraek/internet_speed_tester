@@ -60,16 +60,16 @@ def internet_speed_tester():
 
         output_progress(args, message, log_name)
 
-    zoom_info, protected_zone_info, initialization_wizard_info = config_registry(args, log_name)
+    registry = config_registry(args, log_name)
 
-    # Can access the above through getattr; e.g., zoom_set = getattr(zoom_info, 'subkey_set')
+    # Can access attributes of the above through getattr; e.g., zoom_set = getattr(registry.zoom_info, 'subkey_set')
 
     # Start Selenium session to fast.com, pull return speed values
 
     message = '++++ Starting speed test ++++'
     output_progress(args, message, log_name)
 
-    results = run_speed_test(args, log_name, zoom_info)
+    results = run_speed_test(args, log_name, registry)
 
     # Output speed test results
 
