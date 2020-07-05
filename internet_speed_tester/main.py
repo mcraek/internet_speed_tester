@@ -53,8 +53,12 @@ def internet_speed_tester():
 
     # Set IE Zoom Level to 100% (Selenium requirement)
 
-    message = '+++ Checking IE Zoom Level is 100% for Selenium +++'
-    output_progress(args, message, log_name)
+    messages = ['+++ Performing Internet Explorer Setup +++', 'The following settings will be checked / configured: ', 
+                'Set IE zoom level to 100%.', 'Enable all protected zones', 'Disable first run setup wizard']
+
+    for message in messages:
+
+        output_progress(args, message, log_name)
 
     registry = config_registry(args, log_name)
 

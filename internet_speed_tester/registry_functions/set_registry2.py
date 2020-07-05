@@ -58,7 +58,7 @@ def check_root_key(args, log_name, reg_connection, root_key_path):
         root_key = None
         root_key_exists = False
 
-        message = 'Root key not found.\nError message: ' + str(e)
+        message = 'Root key not found. Results of check: ' + str(e)
         output_progress(args, message, log_name)
 
     if not root_key_exists:
@@ -67,9 +67,8 @@ def check_root_key(args, log_name, reg_connection, root_key_path):
         output_progress(args, message, log_name)
 
         try:
-
+            
             winreg.CreateKey(reg_connection, root_key_path)
-            return True
 
         except Exception as e:
 
