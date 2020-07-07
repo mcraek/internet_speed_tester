@@ -11,6 +11,7 @@ from internet_speed_tester.site_connection_functions import validate_site_connec
 from internet_speed_tester.registry_functions import config_registry, set_subkey_value
 from internet_speed_tester.web_scraping_functions import run_speed_test
 from internet_speed_tester.web_scraping_functions.terminate_web_session import end_web_session
+from internet_speed_tester.registry_functions.restore_registry import recover_registry
 
 
 def internet_speed_tester():
@@ -60,7 +61,7 @@ def internet_speed_tester():
 
         output_progress(args, message, log_name)
 
-    registry = config_registry(args, log_name)
+    registry, reg_connection = config_registry(args, log_name)
 
     # Can access attributes of the above through getattr; e.g., zoom_set = getattr(registry.zoom_info, 'subkey_set')
 
@@ -79,12 +80,12 @@ def internet_speed_tester():
 
     output_progress(args, message, log_name)
 
-    # Terminate IE browser instance / restore IE original ZoomFactor
+    # Restore registry settings
 
-    message = '++++ Terminating IE Browser Instance ++++'
+    message = '++++ Restoring registry settings ++++'
     output_progress(args, message, log_name)
 
-    end_web_session(args, log_name, 'graceful', registry, results.session)
+    recover_registry(args, log_name, registry, reg_connection)
 
 
 if __name__ == "__main__":

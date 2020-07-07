@@ -12,10 +12,13 @@ class RegSetting():
 
     def __init__self():
 
+        self.root_key_path = ''
+        self.subkey_name = ''
         self.subkey_set = ''
         self.original_value = ''
         self.root_key = ''
         self.subkey_exists = ''
+        self.subkey_access = ''
 
 # Initialize classes for storing information and connections to registry keys that will be checked / configured
 
@@ -27,9 +30,10 @@ class RegistryConfig():
 
     def __init__self():
 
-        self.zoom_info = []
-        self.original_value = []
-        self.initialization_wizard_info = []
+        self.registry_connection = ''
+        self.zoom_info = ''
+        self.original_value = ''
+        self.initialization_wizard_info = ''
 
 # Initialize class for storing all other classes of registry connections / info. This is returned at the end of config_registry
 
@@ -69,10 +73,13 @@ def config_registry(args, log_name):
 
     # Add information on zoom factor registry settings to class created earlier
 
+    setattr(zoom_info, 'root_key_path', zoom_root_key_path)
+    setattr(zoom_info, 'subkey_name',zoom_subkey_name)
     setattr(zoom_info, 'subkey_set', zoom_subkey_changed)
     setattr(zoom_info, 'original_value', ie_original_zoom)
     setattr(zoom_info, 'root_key', zoom_root_key)
     setattr(zoom_info, 'subkey_exists', zoom_subkey_exists)
+    setattr(zoom_info, 'subkey_access', zoom_subkey_access)
     
     # Ensure all IE Protected Zones Are Enabled using existing HKCU connection
 
@@ -125,15 +132,23 @@ def config_registry(args, log_name):
 
         # Store information on registry changes to Zones class created earlier
 
-        attribute_1 = 'zone_' + str(zone) + '_subkey_set'
-        attribute_2 = 'zone_' + str(zone) + '_original_value'
-        attribute_3 = 'zone_' + str(zone) + '_root_key'
-        attribute_4 = 'zone_' + str(zone) + '_subkey_exists'
+        name = 'zone_' + str(zone)
 
-        setattr(protected_zone_info, attribute_1, subkey_changed)
-        setattr(protected_zone_info, attribute_2, original_zone_setting)
-        setattr(protected_zone_info, attribute_3, subkey_access)
-        setattr(protected_zone_info, attribute_4, subkey_exists)
+        attribute_1 = name + '_root_key_path'
+        attribute_2 = name + 'subkey_name'
+        attribute_3 = name + '_subkey_set'
+        attribute_4 = name + '_original_value'
+        attribute_5 = name + '_root_key'
+        attribute_6 = name + '_subkey_exists'
+        attribute_7 = name + '_subkey_access'
+
+        setattr(protected_zone_info, attribute_1, root_key_path)
+        setattr(protected_zone_info, attribute_2, subkey_name)
+        setattr(protected_zone_info, attribute_3, subkey_changed)
+        setattr(protected_zone_info, attribute_4, original_zone_setting)
+        setattr(protected_zone_info, attribute_5, subkey_access)
+        setattr(protected_zone_info, attribute_6, subkey_exists)
+        setattr(protected_zone_info, attribute_7, subkey_access)
 
         # Creates class for storing information on each IE Protected Zone registry setting
     
@@ -156,6 +171,8 @@ def config_registry(args, log_name):
 
     # Add information on the IE initialization wizard registry settings to class created earlier
 
+    setattr(initialization_wizard_info, 'root_key_path', wizard_root_key_path)
+    setattr(initialization_wizard_info, 'subkey_name', wizard_subkey_name)
     setattr(initialization_wizard_info, 'subkey_set', wizard_subkey_changed)
     setattr(initialization_wizard_info, 'original_value', original_ie_setup)
     setattr(initialization_wizard_info, 'root_key', wizard_root_key)
@@ -167,9 +184,9 @@ def config_registry(args, log_name):
     setattr(registry_config, 'protected_zone_info', protected_zone_info)
     setattr(registry_config, 'initialization_wizard_info', initialization_wizard_info)
 
-    # Return class with reg connections / info
+    # Return class with reg connections / info, and connection to HKCU
 
-    return registry_config
+    return registry_config, reg_connection
 
 
 if __name__ == '__main__':
